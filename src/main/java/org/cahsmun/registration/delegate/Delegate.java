@@ -45,6 +45,9 @@ public class Delegate {
     @Column(name="has_paid")
     private boolean has_paid;
 
+    @Column(name="sponsor_teacher")
+    private String sponsor_teacher;
+
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)

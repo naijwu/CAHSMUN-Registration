@@ -43,5 +43,4 @@ public class DelegateController {
         delegateRepository.deleteById(delegate_id);
     }
 
-
 }
