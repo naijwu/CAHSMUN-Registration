@@ -20,7 +20,6 @@ public class Delegate {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // generates value for the primary key | strategy: how it gets its value from db
     private long delegate_id;
 
-
     @Column(name="email")
     private String email;
 
