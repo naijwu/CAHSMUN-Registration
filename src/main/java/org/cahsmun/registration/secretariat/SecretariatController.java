@@ -16,7 +16,7 @@ public class SecretariatController {
     SecretariatRepository secretariatRepository;
 
     @GetMapping("/secretariat")
-    public List<Secretariat> retrieveAllDelegates() {
+    public List<Secretariat> retrieveAllSecretariats() {
         return StreamSupport.stream(secretariatRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }

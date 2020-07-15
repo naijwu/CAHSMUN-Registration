@@ -20,33 +20,81 @@ public class Delegate {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // generates value for the primary key | strategy: how it gets its value from db
     private long delegate_id;
 
-    // Input Values -- What will be on the registration form
-
-    @Column(name="full_name")
-    private String full_name;
 
     @Column(name="email")
     private String email;
 
+    @Column(name="password")
+    private String password;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="age")
+    private int age;
+
+    @Column(name="school")
+    private String school;
+
+    @Column(name="gender")
+    private String gender;
+
+    @Column(name="phone_number")
+    private String phone_number;
+
     @Column(name="date_of_birth")
     private Date date_of_birth;
 
-    // TODO: Declare the variables for the rest of the columns
+    @Column(name="grade")
+    private int grade;
 
+    @Column(name="address")
+    private String address;
 
-    // Internal Values
+    @Column(name="city")
+    private String city;
 
-    @Column(name="assigned_country")
-    private String assigned_country;
+    @Column(name="province")
+    private String province;
 
-    @Column(name="assigned_committee")
-    private String assigned_committee;
+    @Column(name="ec_name")
+    private String ec_name;
+
+    @Column(name="ec_phone_number")
+    private String ec_phone_number;
+
+    @Column(name="ec_relationship")
+    private String ec_relationship;
+
+    @Column(name="past_experience")
+    private String past_experience;
+
+    @Column(name="pref_first_comm")
+    private String pref_first_comm;
+
+    @Column(name="pref_first_country")
+    private String pref_first_country;
+
+    @Column(name="pref_second_comm")
+    private String pref_second_comm;
+
+    @Column(name="pref_second_country")
+    private String pref_second_country;
+
+    @Column(name="pref_third_comm")
+    private String pref_third_comm;
+
+    @Column(name="pref_third_country")
+    private String pref_third_country;
+
+    @Column(name="assignment")
+    private String assignment;
 
     @Column(name="has_paid")
-    private boolean has_paid;
+    private int has_paid;
 
-    @Column(name="sponsor_teacher")
-    private String sponsor_teacher;
+    @Column(name="waiverLink") // IDK why i made this camel case and everything else is underscored -- its a personality trait?
+    private String waiverLink;
 
     @CreationTimestamp
     @Column(name = "last_update")
