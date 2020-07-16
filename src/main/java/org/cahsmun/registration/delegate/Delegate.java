@@ -92,7 +92,7 @@ public class Delegate {
     @Column(name="haspaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
     private int has_paid;
 
-    @Column(name="waiverLink")
+    @Column(name="waiverlink")
     private String waiver_link;
 
     @Column(name="waiver")
