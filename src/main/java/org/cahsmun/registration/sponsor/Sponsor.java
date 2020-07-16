@@ -33,5 +33,5 @@ public class Sponsor {
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
-    private Date last_updated;
+    private Date last_update;
 }

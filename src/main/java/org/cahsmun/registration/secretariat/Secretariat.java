@@ -37,7 +37,7 @@ public class Secretariat {
     private String phone_number;
 
     @CreationTimestamp
-    @Column(name="last_updated")
+    @Column(name="last_update")
     @Setter(AccessLevel.NONE)
-    private Date last_updated;
+    private Date last_update;
 }

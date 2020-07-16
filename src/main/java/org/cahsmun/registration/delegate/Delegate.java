@@ -90,7 +90,7 @@ public class Delegate {
     private String assignment;
 
     @Column(name="haspaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
-    private int has_paid;
+    private int has_paid; // TODO: change column names for haspaid, waiverlink
 
     @Column(name="waiverlink")
     private String waiver_link;
@@ -101,5 +101,5 @@ public class Delegate {
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
-    private Date last_updated;
+    private Date last_update;
 }
