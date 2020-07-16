@@ -26,7 +26,7 @@ public class DelegateController {
     @GetMapping("/delegates/{delegate_id}") // Returning a specific delegate
     public Delegate findById(@PathVariable long delegate_id) {
         return delegateRepository.findById(delegate_id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + delegate_id));
+                .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
     }
 
     @PostMapping("/delegates")

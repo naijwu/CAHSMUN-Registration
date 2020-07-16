@@ -15,16 +15,22 @@ public class SecretariatController {
     @Resource
     SecretariatRepository secretariatRepository;
 
-    @GetMapping("/secretariat")
+    @GetMapping("/secretariats")
     public List<Secretariat> retrieveAllSecretariats() {
         return StreamSupport.stream(secretariatRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/secretariat/{secretariat_id}")
-    public void delete(@PathVariable long delegate_id) {
-        secretariatRepository.findById(delegate_id)
-                .orElseThrow(() -> new ResourceNotFoundException("Secretariat not found with ID: " + delegate_id));
-        secretariatRepository.deleteById(delegate_id);
+    @GetMapping("/secretariats/{secretariat_id}")
+    public Secretariat findById(@PathVariable long secretariat_id) {
+        return secretariatRepository.findById(secretariat_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Secretariat not found with ID: " + secretariat_id));
+    }
+
+    @DeleteMapping("/secretariats/{secretariat_id}")
+    public void delete(@PathVariable long secretariat_id) {
+        secretariatRepository.findById(secretariat_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Secretariat not found with ID: " + secretariat_id));
+        secretariatRepository.deleteById(secretariat_id);
     }
 }
