@@ -16,7 +16,7 @@ public class Secretariat {
     @Id
     @Column(name="secretariat_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int secretariat_id;
+    private long secretariat_id;
 
     @Column(name="email")
     private String email;
