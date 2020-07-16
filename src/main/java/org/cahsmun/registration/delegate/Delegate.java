@@ -95,6 +95,9 @@ public class Delegate {
     @Column(name="waiverLink")
     private String waiverLink;
 
+    @Column(name="waiver")
+    private byte[] waiver;
+
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
