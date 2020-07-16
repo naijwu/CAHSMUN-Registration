@@ -89,10 +89,10 @@ public class Delegate {
     @Column(name="assignment")
     private String assignment;
 
-    @Column(name="has_paid")
-    private int has_paid;
+    @Column(name="hasPaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
+    private int hasPaid;
 
-    @Column(name="waiverLink") // IDK why i made this camel case and everything else is underscored -- its a personality trait?
+    @Column(name="waiverLink")
     private String waiverLink;
 
     @CreationTimestamp
