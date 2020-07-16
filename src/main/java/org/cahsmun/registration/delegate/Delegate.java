@@ -89,11 +89,11 @@ public class Delegate {
     @Column(name="assignment")
     private String assignment;
 
-    @Column(name="hasPaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
-    private int hasPaid;
+    @Column(name="haspaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
+    private int has_paid;
 
     @Column(name="waiverLink")
-    private String waiverLink;
+    private String waiver_link;
 
     @Column(name="waiver")
     private byte[] waiver;
