@@ -6,12 +6,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*; // Entity and table annotations
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data // Lombok specific annotation; makes it create getters and setters
 @Table(name="delegate", schema="public") // Mapping this entity to the delegate table
-public class Delegate {
+public class Delegate implements Serializable {
 
     // Note on convention: Variable naming scheme is not the typical camel case, as to match w/ column names in the database
 
@@ -99,7 +100,7 @@ public class Delegate {
     private byte[] waiver;
 
     @CreationTimestamp
-    @Column(name = "last_update")
+    @Column(name="last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
 }
