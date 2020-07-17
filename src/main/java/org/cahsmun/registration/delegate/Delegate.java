@@ -1,8 +1,10 @@
 package org.cahsmun.registration.delegate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.cahsmun.registration.assignment.Assignment;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*; // Entity and table annotations
