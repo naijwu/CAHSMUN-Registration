@@ -1,5 +1,6 @@
 package org.cahsmun.registration.delegate;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.stream.StreamSupport;
 
 @CrossOrigin() // Will be for eventually the front end when it calls on the data
 @RestController
+@Slf4j
 public class DelegateController {
 
     @Resource
