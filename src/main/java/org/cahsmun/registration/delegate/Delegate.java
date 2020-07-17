@@ -18,7 +18,7 @@ public class Delegate implements Serializable {
 
     @Id
     @Column(name="delegate_id") // maps the variable to this column -- must be the column name of the database
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // generates value for the primary key | strategy: how it gets its value from db
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="delegate_id_seq") // generates value for the primary key | strategy: how it gets its value from db
     private long delegate_id;
 
     @Column(name="email")
