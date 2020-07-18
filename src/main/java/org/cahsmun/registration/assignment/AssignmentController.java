@@ -72,7 +72,4 @@ public class AssignmentController {
 
         return assignmentRepository.save(assignment);
     }
-
-    /* ASSIGNMENT
-    */
 }

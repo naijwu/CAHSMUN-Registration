@@ -29,7 +29,7 @@ public class Assignment implements Serializable {
     private Delegate delegate;
     */
 
-    @OneToOne(mappedBy="assignment", fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=false)
+    @JoinColumn(name = "delegate_id", nullable = false)
     @JsonIgnore
     private Delegate delegate;
 }
