@@ -62,8 +62,8 @@ public class DelegateController {
         delegateFromDB.setPref_second_country(delegate.getPref_second_country());
         delegateFromDB.setPref_third_comm(delegate.getPref_third_comm());
         delegateFromDB.setPref_third_country(delegate.getPref_third_country());
-        delegateFromDB.setAssignment(delegate.getAssignment());
-        delegateFromDB.setHas_paid(delegate.getHas_paid());
+        delegateFromDB.setAssignment_id(delegate.getAssignment_id());
+        delegateFromDB.setPayment_status(delegate.getPayment_status());
         delegateFromDB.setWaiver_link(delegate.getWaiver_link());
         delegateFromDB.setWaiver(delegate.getWaiver());
         return delegateRepository.save(delegateFromDB);

@@ -89,13 +89,10 @@ public class Delegate implements Serializable {
     @Column(name="pref_third_country")
     private String pref_third_country;
 
-    @Column(name="assignment")
-    private String assignment;
+    @Column(name="payment_status")
+    private int payment_status;
 
-    @Column(name="haspaid") // IDK why i made this camel case (along with waiverLink) and everything else is underscored -- its a personality trait?
-    private int has_paid; // TODO: change column names for haspaid, waiverlink
-
-    @Column(name="waiverlink")
+    @Column(name="waiver_link")
     private String waiver_link;
 
     @Column(name="waiver")
@@ -105,4 +102,7 @@ public class Delegate implements Serializable {
     @Column(name="last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
+
+    @Column(name="assignment_id")
+    private long assignment_id;
 }

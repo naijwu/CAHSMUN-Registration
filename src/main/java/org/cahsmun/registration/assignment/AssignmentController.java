@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @CrossOrigin()
@@ -37,6 +38,11 @@ public class AssignmentController {
                 .collect(Collectors.toList());
     }
 
+    /*
+    @GetMapping("/assignments/{committee}")
+    public List<Assignment> retrieveByCommittee(@RequestParam String committee) { // was gonna do backend, but dynamic routing would be hard so I wouldn't use it...
+    }*/
+
     @PutMapping("/assignments/{assignment_id}") // UPDATE -- specific, pre-existing assignment combo
     public Assignment updateAssignment(@PathVariable long assignment_id, @Valid @RequestBody Assignment assignment) {
         Assignment assignmentFromDB = assignmentRepository.findById(assignment_id)
@@ -54,17 +60,19 @@ public class AssignmentController {
         assignmentRepository.deleteById(assignment_id);
     }
 
-
-    /* ASSIGNMENT
-
     @PutMapping("/assign/{assignment_id}/{delegate_id}")
     public Assignment assignDelegate(@PathVariable long assignment_id, @PathVariable long delegate_id) {
         Assignment assignment = assignmentRepository.findById(assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
         Delegate delegate = delegateRepository.findById(delegate_id).orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
 
-        assignment.setDelegate_id(delegate.getDelegate_id());
-        delegate.setMatrixAssignment(assignment);
+        assignment.setDelegate(delegate); // join table
+        delegate.setAssignment_id(assignment.getAssignment_id());
+
+        delegateRepository.save(delegate);
+
+        return assignmentRepository.save(assignment);
     }
 
+    /* ASSIGNMENT
     */
 }

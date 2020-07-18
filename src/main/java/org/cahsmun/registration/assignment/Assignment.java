@@ -23,17 +23,13 @@ public class Assignment implements Serializable {
     @Column(name="committee")
     private String committee;
 
-    @Column(name="delegate")
-    private String delegate;
-
     /*
     TODO: figure out after displaying country matrix
-
-    @Column(name="delegate_id", insertable=false, updatable=false)
-    private long delegate_id;
+    @Column(name="delegate", insertable=false, updatable=false)
+    private Delegate delegate;
+    */
 
     @OneToOne(mappedBy="assignment", fetch=FetchType.LAZY, cascade=CascadeType.ALL, optional=false)
     @JsonIgnore
     private Delegate delegate;
-    */
 }

@@ -34,4 +34,6 @@ public class Sponsor {
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
+
+    // TODO: Add Gender column for rooming purposes
 }
