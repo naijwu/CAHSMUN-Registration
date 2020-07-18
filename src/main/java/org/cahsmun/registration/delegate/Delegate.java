@@ -104,5 +104,5 @@ public class Delegate implements Serializable {
     private Date last_update;
 
     @Column(name="assignment_id")
-    private Integer assignment_id;
+    private long assignment_id;
 }

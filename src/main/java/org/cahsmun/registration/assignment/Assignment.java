@@ -15,7 +15,7 @@ public class Assignment implements Serializable {
     @Id
     @Column(name="assignment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer assignment_id; // TODO: Find a more consistent solution for "cannot assign null value" (other ID's are LONG)
+    private long assignment_id;
 
     @Column(name="country")
     private String country;
@@ -29,7 +29,6 @@ public class Assignment implements Serializable {
     private Delegate delegate;
     */
 
-    @JoinColumn(name = "delegate_id", nullable = false)
-    @JsonIgnore
-    private Delegate delegate;
+    @Column(name = "delegate_id")
+    private long delegate_id;
 }

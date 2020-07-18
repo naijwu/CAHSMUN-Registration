@@ -49,7 +49,7 @@ public class AssignmentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Broken front-end code -- Check axios request + DB. Requested Assignment with ID: " + assignment_id)); // passed ID is dictated by the front-end
         assignmentFromDB.setCommittee(assignment.getCommittee());
         assignmentFromDB.setCountry(assignment.getCountry());
-        assignmentFromDB.setDelegate(assignment.getDelegate());
+        assignmentFromDB.setDelegate_id(assignment.getDelegate_id());
         return assignmentRepository.save(assignmentFromDB);
     }
 
@@ -61,11 +61,11 @@ public class AssignmentController {
     }
 
     @PutMapping("/assign/{assignment_id}/{delegate_id}")
-    public Assignment assignDelegate(@PathVariable Integer assignment_id, @PathVariable long delegate_id) {
-        Assignment assignment = assignmentRepository.findById((long)assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
+    public Assignment assignDelegate(@PathVariable long assignment_id, @PathVariable long delegate_id) {
+        Assignment assignment = assignmentRepository.findById(assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
         Delegate delegate = delegateRepository.findById(delegate_id).orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
 
-        assignment.setDelegate(delegate); // join table
+        assignment.setDelegate_id(delegate.getDelegate_id()); // join table
         delegate.setAssignment_id(assignment.getAssignment_id());
 
         delegateRepository.save(delegate);
