@@ -61,8 +61,8 @@ public class AssignmentController {
     }
 
     @PutMapping("/assign/{assignment_id}/{delegate_id}")
-    public Assignment assignDelegate(@PathVariable long assignment_id, @PathVariable long delegate_id) {
-        Assignment assignment = assignmentRepository.findById(assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
+    public Assignment assignDelegate(@PathVariable Integer assignment_id, @PathVariable long delegate_id) {
+        Assignment assignment = assignmentRepository.findById((long)assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
         Delegate delegate = delegateRepository.findById(delegate_id).orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
 
         assignment.setDelegate(delegate); // join table
