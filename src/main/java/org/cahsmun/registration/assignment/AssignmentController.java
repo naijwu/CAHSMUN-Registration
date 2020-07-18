@@ -38,10 +38,11 @@ public class AssignmentController {
                 .collect(Collectors.toList());
     }
 
-    /*
-    @GetMapping("/assignments/{committee}")
-    public List<Assignment> retrieveByCommittee(@RequestParam String committee) { // was gonna do backend, but dynamic routing would be hard so I wouldn't use it...
-    }*/
+    @GetMapping("/assignments/{assignment_id}") // Returning a specific delegate
+    public Assignment findById(@PathVariable long assignment_id) {
+        return assignmentRepository.findById(assignment_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
+    }
 
     @PutMapping("/assignments/{assignment_id}") // UPDATE -- specific, pre-existing assignment combo
     public Assignment updateAssignment(@PathVariable long assignment_id, @Valid @RequestBody Assignment assignment) {
