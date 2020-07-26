@@ -20,7 +20,7 @@ public class Delegate implements Serializable {
 
     @Id
     @Column(name="delegate_id") // maps the variable to this column -- must be the column name of the database
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="delegate_id_seq") // generates value for the primary key | strategy: how it gets its value from db
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // generates value for the primary key | strategy: how it gets its value from db
     private long delegate_id; // TODO: Fix issue w/ "relation 'delegate_delegate_id_seq' does not exist" to use GenerationType.IDENTITY
 
     @Column(name="email")
@@ -105,4 +105,9 @@ public class Delegate implements Serializable {
 
     @Column(name="assignment_id")
     private long assignment_id;
+
+    public Delegate(RegistrationInfo registrationInfo) {
+        this.email = registrationInfo.getEmail();
+    }
+
 }

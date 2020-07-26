@@ -1,8 +1,11 @@
 package org.cahsmun.registration.delegate;
 
 import lombok.extern.slf4j.Slf4j;
+import org.cahsmun.registration.authentication.UserExistException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.cahsmun.registration.user.User;
+import org.cahsmun.registration.user.UserServiceImpl;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -18,6 +21,9 @@ public class DelegateController {
     @Resource
     DelegateRepository delegateRepository;
 
+    @Resource
+    UserServiceImpl userService;
+
     // CRUD Methods
     @GetMapping("/delegates") // Returns list of all delegates; will be used by DA
     public List<Delegate> retrieveAllDelegates() {
@@ -32,8 +38,11 @@ public class DelegateController {
     }
 
     @PostMapping("/delegates")
-    public Delegate createDelegate(@Valid @RequestBody Delegate delegate) {
-        return delegateRepository.save(delegate);
+    public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
+        User user = userService.save(new User(registrationInfo));
+        if( user != null) {
+            return delegateRepository.save(new Delegate(registrationInfo));
+        } else throw new UserExistException("User is empty. Something went wrong.");
     }
 
     @PutMapping("/delegates/{delegate_id}") // updates

@@ -33,6 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        /*
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+                */
+
         auth.inMemoryAuthentication().withUser(configUtil.getProperty("spring.security.user.name"))
                 .password("{noop}" + configUtil.getProperty("spring.security.user.password")).roles("ADMIN");
     }
@@ -61,10 +65,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .cors().and()
                 .csrf().disable()
                 .cors()
                 .and()
                 // Don't authenticate this particular request
+                .authorizeRequests()
+                .antMatchers("/token/**").permitAll()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 // All other request need to be authenticated

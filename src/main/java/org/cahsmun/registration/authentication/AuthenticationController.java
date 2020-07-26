@@ -1,45 +1,64 @@
 package org.cahsmun.registration.authentication;
 
+import org.cahsmun.registration.user.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.Date;
+import java.util.Set;
 
-@CrossOrigin
+@CrossOrigin()
 @RestController
+@Slf4j
+@RequestMapping(value = "/token")
 public class AuthenticationController {
-    /*
-        Test in postman: POST, Header: Content-Type, application/json, Body:
-        {
-	        "username" : "user",
-	        "password" : "name"
-        }
-     */
 
-    @Resource
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    /* When data passed in from the front end, it takes the authentication and creates an authentication; results in authenticate success or fail,
-     * and then its sent to SecurityContextHolder (Spring Security) as its authentication status, as well as the user that's been authenticated
+    @Autowired
+    private org.cahsmun.registration.authentication.JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    UserServiceImpl userServiceImpl;
+
+
+    /**
+     * @param loginRequest
+     * @return
+     * @throws Exception
      */
-    @PostMapping("/login")
-    public Credentials createAuthentication(@Valid @RequestBody Credentials credentials) throws Exception {
+    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
+    public JwtResponse createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
+        // Step 1: Authenticate user
         Authentication authentication = authenticationManager.authenticate(
-                // passing ID and password
                 new UsernamePasswordAuthenticationToken(
-                        credentials.getUsername(),
-                        credentials.getPassword())
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword())
         );
 
+        // Step 2: Load the user
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new Credentials(credentials.getUsername(), new Date());
+        final UserPrincipal userPrincipal = userServiceImpl.loadUserPrincipalByEmail(loginRequest.getEmail());
+
+        // Step 3: Create JWT
+        log.info("createAuthenticationToken: " + userPrincipal.getUsername());
+        return new JwtResponse(true, 200,
+                "success",
+                userPrincipal.getUsername(),
+                jwtTokenUtil.generateToken(userPrincipal),
+                userPrincipal.getFullName(),
+                (Set) userPrincipal.getAuthorities()
+        );
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public JwtResponse logout() throws AuthenticationException {
+        return new JwtResponse(false, 200, "success", null, null, null, null);
     }
 }
