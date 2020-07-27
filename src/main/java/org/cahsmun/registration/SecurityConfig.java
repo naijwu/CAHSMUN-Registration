@@ -45,6 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * AuthManagerBuilder provides various authentication mechanism: DB, LDAP, in-memory.
      * Configure AuthenticationManager so that it knows from where to load user for matching credentials. (the '.inMemoryAuthentication')
      *
+     * Default BCrypt rounds: 10
+     *
      * @param auth
      * @throws Exception
      */
@@ -98,6 +100,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
-
 
 }

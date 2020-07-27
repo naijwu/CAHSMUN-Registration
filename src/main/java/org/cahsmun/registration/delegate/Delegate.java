@@ -134,5 +134,4 @@ public class Delegate implements Serializable {
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
     }
-
 }
