@@ -37,7 +37,7 @@ public class DelegateController {
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
     }
 
-    @PostMapping("/delegates")
+    @PostMapping("/registration")
     public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
         User user = userService.save(new User(registrationInfo));
         if(user != null) {
