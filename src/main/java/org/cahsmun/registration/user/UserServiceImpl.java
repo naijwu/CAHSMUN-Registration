@@ -43,13 +43,13 @@ public class UserServiceImpl implements UserDetailsService {
      * @throws ResourceNotFoundException
      */
     public UserPrincipal loadUserPrincipalByEmail(String email) throws ResourceNotFoundException {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByUsername(email);
         if (user == null) {
             throw new UsernameNotFoundException("User email cannot be found in the system.");
         }
 
         //String email, String fullName, String password, Collection<? extends GrantedAuthority> authorities
-        return new UserPrincipal(email, user.getName(), "", getAuthority(user));
+        return new UserPrincipal(email, user.getUsername(), "", getAuthority(user));
     }
 
     /**
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws ResourceNotFoundException {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByUsername(email);
         if (user == null) {
             throw new UsernameNotFoundException("User email cannot be found in the system.");
         }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserDetailsService {
      */
     public User save(User user) throws UserExistException {
 
-        User existingUser = userRepository.findByEmail(user.getEmail());
+        User existingUser = userRepository.findByUsername(user.getEmail());
 
         if (existingUser != null) {
             throw new UserExistException(

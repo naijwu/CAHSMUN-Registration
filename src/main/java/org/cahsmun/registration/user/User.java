@@ -27,7 +27,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "name")
-    private String name;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -43,7 +43,7 @@ public class User implements Serializable {
 
     public User(RegistrationInfo registrationInfo) {
         this.email = registrationInfo.getEmail();
-        this.name = registrationInfo.getName();
+        this.username = registrationInfo.getName();
         this.password = registrationInfo.getPassword();
         this.enabled = true;
     }
