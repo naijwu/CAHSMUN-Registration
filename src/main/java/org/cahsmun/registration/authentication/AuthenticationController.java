@@ -52,7 +52,7 @@ public class AuthenticationController {
                 "success",
                 userPrincipal.getUsername(),
                 jwtTokenUtil.generateToken(userPrincipal),
-                userPrincipal.getFullName(),
+                userPrincipal.getName(),
                 (Set) userPrincipal.getAuthorities()
         );
     }

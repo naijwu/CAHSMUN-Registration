@@ -108,6 +108,7 @@ public class Delegate implements Serializable {
 
     public Delegate(RegistrationInfo registrationInfo) {
         this.email = registrationInfo.getEmail();
+        this.password = registrationInfo.getPassword();
     }
 
 }

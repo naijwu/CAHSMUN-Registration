@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public class UserPrincipal implements UserDetails {
 
     private String email;
-    private String fullName;
+    private String name;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(String email, String fullName, String password, Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
-        this.fullName = fullName;
+        this.name = name;
         this.password = password;
         this.authorities = authorities;
     }
@@ -55,12 +55,12 @@ public class UserPrincipal implements UserDetails {
         return email;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

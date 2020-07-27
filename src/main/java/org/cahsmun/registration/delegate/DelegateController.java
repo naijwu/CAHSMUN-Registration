@@ -40,7 +40,7 @@ public class DelegateController {
     @PostMapping("/delegates")
     public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
         User user = userService.save(new User(registrationInfo));
-        if( user != null) {
+        if(user != null) {
             return delegateRepository.save(new Delegate(registrationInfo));
         } else throw new UserExistException("User is empty. Something went wrong.");
     }
