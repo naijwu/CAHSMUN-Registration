@@ -20,12 +20,11 @@ public class Role implements Serializable, GrantedAuthority {
 
     @Id
     @Column(name = "role_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
 
     @Column(name = "authority")
     private String authority;
-
 
     @CreationTimestamp
     @Column(name = "last_update")

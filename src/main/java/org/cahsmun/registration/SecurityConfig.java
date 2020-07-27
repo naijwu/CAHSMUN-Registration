@@ -1,22 +1,39 @@
 package org.cahsmun.registration;
 
-import org.cahsmun.registration.util.ConfigUtil;
+import org.cahsmun.registration.authentication.JwtAuthenticationEntryPoint;
+import org.cahsmun.registration.authentication.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    ConfigUtil configUtil;
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     @Bean
@@ -33,12 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-                */
 
+        /*
         auth.inMemoryAuthentication().withUser(configUtil.getProperty("spring.security.user.name"))
                 .password("{noop}" + configUtil.getProperty("spring.security.user.password")).roles("ADMIN");
+                */
     }
 
 
@@ -67,22 +84,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
-                .cors()
-                .and()
                 // Don't authenticate this particular request
-                .authorizeRequests()
-                .antMatchers("/token/**").permitAll()
+                .authorizeRequests().antMatchers("/token/**").permitAll()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .authorizeRequests().antMatchers("/login/**").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/registration/**").permitAll()
                 // All other request need to be authenticated
                 .anyRequest().authenticated()
-
                 .and()
-                .httpBasic()
-                // All other request need to be authenticated
-                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
