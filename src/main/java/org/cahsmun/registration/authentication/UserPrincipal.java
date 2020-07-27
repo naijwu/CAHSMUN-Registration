@@ -39,7 +39,7 @@ public class UserPrincipal implements UserDetails {
                 .collect(Collectors.toList());
 
         // User name is actually email
-        return new UserPrincipal(user.getEmail(),
+        return new UserPrincipal(user.getUsername(),
                 user.getName(),
                 user.getPassword(),
                 authorities);
