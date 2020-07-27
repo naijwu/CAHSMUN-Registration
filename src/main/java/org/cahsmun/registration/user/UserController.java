@@ -34,9 +34,9 @@ public class UserController {
 
     // Register through GuardianController
     public User createUser(@Valid @RequestBody User user) throws UserExistException {
-        User existingUser = userRepository.findByUsername(user.getEmail());
+        User existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser != null) {
-            throw new UserExistException("User email already exists: " + user.getEmail());
+            throw new UserExistException("User email already exists: " + user.getUsername());
 
         }
         // Need to consider encrypting and setting password for users
