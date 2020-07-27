@@ -66,10 +66,10 @@ public class UserServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User email cannot be found in the system.");
         }
 
-        log.info("************************* " + user.getEmail() + " PW: " + user.getPassword());
+        log.info("************************* " + user.getUsername() + " PW: " + user.getPassword());
         log.info("************ role: " + getAuthority(user));
 
-        return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
+        return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
                 .password(user.getPassword())
                 .authorities(getAuthority(user))
                 .build();
@@ -93,14 +93,14 @@ public class UserServiceImpl implements UserDetailsService {
      */
     public User save(User user) throws UserExistException {
 
-        User existingUser = userRepository.findByUsername(user.getEmail());
+        User existingUser = userRepository.findByUsername(user.getUsername());
 
         if (existingUser != null) {
             throw new UserExistException(
-                    "There is an account with that email address: " + user.getEmail());
+                    "There is an account with that email address: " + user.getUsername());
         }
         
-        user.setEmail(user.getEmail());
+        user.setUsername(user.getUsername());
         user.setPassword(passwordEncoder().encode(user.getPassword()));
 
         if (user.getRoles().size() == 0) {

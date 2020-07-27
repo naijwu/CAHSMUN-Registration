@@ -23,11 +23,12 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
 
-    @Column(name = "email")
-    private String email;
+    // Email
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "name")
-    private String username;
+    private String name;
 
     @Column(name = "password")
     private String password;
@@ -42,8 +43,8 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     public User(RegistrationInfo registrationInfo) {
-        this.email = registrationInfo.getEmail();
-        this.username = registrationInfo.getName();
+        this.username = registrationInfo.getEmail();
+        this.name = registrationInfo.getName();
         this.password = registrationInfo.getPassword();
         this.enabled = true;
     }
