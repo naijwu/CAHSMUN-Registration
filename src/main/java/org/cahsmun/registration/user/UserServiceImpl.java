@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserDetailsService {
      */
     public UserPrincipal loadUserPrincipalByEmail(String email) throws ResourceNotFoundException {
         User user = userRepository.findByUsername(email);
+
         if (user == null) {
             throw new UsernameNotFoundException("User email cannot be found in the system.");
         }

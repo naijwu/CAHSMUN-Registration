@@ -16,7 +16,7 @@ public class UserPrincipal implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String email, String fullName, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(String email, String name, String password, Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -38,7 +38,7 @@ public class UserPrincipal implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
 
-        // User name is actually email
+        // Username is actually email
         return new UserPrincipal(user.getUsername(),
                 user.getName(),
                 user.getPassword(),

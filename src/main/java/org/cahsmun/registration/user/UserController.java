@@ -32,7 +32,7 @@ public class UserController {
         return userRepository.findByUsername(email);
     }
 
-    // Register through GuardianController
+    // Register through DeelgateController
     public User createUser(@Valid @RequestBody User user) throws UserExistException {
         User existingUser = userRepository.findByUsername(user.getUsername());
         if (existingUser != null) {
