@@ -98,17 +98,41 @@ public class Delegate implements Serializable {
     @Column(name="waiver")
     private byte[] waiver;
 
+    @Column(name="assignment_id")
+    private long assignment_id;
+
     @CreationTimestamp
     @Column(name="last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
 
-    @Column(name="assignment_id")
-    private long assignment_id;
-
     public Delegate(RegistrationInfo registrationInfo) {
         this.email = registrationInfo.getEmail();
         this.password = registrationInfo.getPassword();
+        this.name = registrationInfo.getName();
+        this.age = registrationInfo.getAge();
+        this.school = registrationInfo.getSchool();
+        this.gender = registrationInfo.getGender();
+        this.phone_number = registrationInfo.getPhone_number();
+        this.date_of_birth = registrationInfo.getDate_of_birth();
+        this.grade = registrationInfo.getGrade();
+        this.address = registrationInfo.getAddress();
+        this.city = registrationInfo.getCity();
+        this.province = registrationInfo.getProvince();
+        this.ec_name = registrationInfo.getEc_name();
+        this.ec_phone_number = registrationInfo.getEc_phone_number();
+        this.ec_relationship = registrationInfo.getEc_relationship();
+        this.past_experience = registrationInfo.getPast_experience();
+        this.pref_first_comm = registrationInfo.getPref_first_comm();
+        this.pref_first_country = registrationInfo.getPref_first_country();
+        this.pref_second_comm = registrationInfo.getPref_second_comm();
+        this.pref_second_country = registrationInfo.getPref_second_country();
+        this.pref_third_comm = registrationInfo.getPref_third_comm();
+        this.pref_third_country = registrationInfo.getPref_third_country();
+        this.payment_status = registrationInfo.getPayment_status();
+        this.waiver_link = registrationInfo.getWaiver_link();
+        this.waiver = registrationInfo.getWaiver();
+        this.assignment_id = registrationInfo.getAssignment_id();
     }
 
 }

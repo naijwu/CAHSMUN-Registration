@@ -11,7 +11,7 @@ public class RegistrationInfo implements Serializable {
     private String email;
     private String password;
     private String name;
-    private String age;
+    private int age;
     private String school;
     private String gender;
     private String phone_number;
