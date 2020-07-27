@@ -3,6 +3,7 @@ package org.cahsmun.registration.delegate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.cahsmun.registration.assignment.Assignment;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Entity
 @Data // Lombok specific annotation; makes it create getters and setters
 @Table(name="delegate", schema="public") // Mapping this entity to the delegate table
+@NoArgsConstructor
 public class Delegate implements Serializable {
 
     // Note on convention: Variable naming scheme is not the typical camel case, as to match w/ column names in the database

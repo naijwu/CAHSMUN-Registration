@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserDetailsService {
         }
 
         //String email, String fullName, String password, Collection<? extends GrantedAuthority> authorities
-        return new UserPrincipal(email, user.getUsername(), "", getAuthority(user));
+        return new UserPrincipal(email, user.getName(), "", getAuthority(user));
     }
 
     /**
