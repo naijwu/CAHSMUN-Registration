@@ -47,7 +47,7 @@ public class AuthenticationController {
         final UserPrincipal userPrincipal = userServiceImpl.loadUserPrincipalByEmail(loginRequest.getEmail());
 
         // Step 3: Create JWT
-        log.info("createAuthenticationToken: " + userPrincipal.getUsername());
+        log.info("createAuthenticationToken: " + userPrincipal.getUsername() + ", with username: " + userPrincipal.getName());
         return new JwtResponse(true, 200,
                 "success",
                 userPrincipal.getUsername(),

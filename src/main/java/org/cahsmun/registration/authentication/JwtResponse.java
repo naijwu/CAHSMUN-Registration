@@ -24,9 +24,9 @@ public class JwtResponse implements Serializable {
         this.logged = logged;
         this.status = status;
         this.message = message;
+        this.name = name;
         this.email = email;
         this.token = token;
-        this.name = name;
         this.roles = roles;
     }
 }
