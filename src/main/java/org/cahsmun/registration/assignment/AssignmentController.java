@@ -39,11 +39,6 @@ public class AssignmentController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/assignments/sort/id") // READ
-    public List<Assignment> returnAssignments() {
-        return StreamSupport.stream(assignmentRepository.findAll(Sort.by(Sort.Direction.ASC, "assignment_id")).spliterator(),false).collect(Collectors.toList());
-    }
-
     @GetMapping("/assignments/{assignment_id}") // Returning a specific delegate
     public Assignment findById(@PathVariable long assignment_id) {
         return assignmentRepository.findById(assignment_id)
