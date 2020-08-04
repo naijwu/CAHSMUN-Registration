@@ -8,8 +8,6 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@EqualsAndHashCode
-@NoArgsConstructor
 @Table(name = "delegation", schema = "public")
 public class Delegation implements Serializable {
 

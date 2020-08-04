@@ -9,8 +9,6 @@ import java.util.Date;
 
 @Entity
 @Data
-@EqualsAndHashCode
-@NoArgsConstructor
 @Table(name = "rooming", schema = "public")
 public class Rooming implements Serializable {
 
