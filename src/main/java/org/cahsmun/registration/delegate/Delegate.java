@@ -103,6 +103,12 @@ public class Delegate implements Serializable {
     @Column(name="assignment_id")
     private long assignment_id;
 
+    @Column(name="delegation_id")
+    private long delegation_id;
+
+    @Column(name="rooming_id")
+    private long rooming_id;
+
     @CreationTimestamp
     @Column(name="last_update")
     @Setter(AccessLevel.NONE)
@@ -135,5 +141,7 @@ public class Delegate implements Serializable {
         this.waiver_link = registrationInfo.getWaiver_link();
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
+        this.delegation_id = registrationInfo.getDelegation_id();
+        this.rooming_id = registrationInfo.getRooming_id();
     }
 }

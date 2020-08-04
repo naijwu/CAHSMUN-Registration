@@ -34,5 +34,7 @@ public class RegistrationInfo implements Serializable {
     private String waiver_link;
     private byte[] waiver;
     private long assignment_id;
+    private long delegation_id;
+    private long rooming_id;
     private boolean enabled;
 }
