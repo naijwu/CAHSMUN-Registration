@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.cahsmun.registration.delegate.RegistrationInfo;
 import org.cahsmun.registration.role.Role;
+import org.cahsmun.registration.sponsor.SponsorInfo;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -46,6 +47,13 @@ public class User implements Serializable {
         this.username = registrationInfo.getEmail();
         this.name = registrationInfo.getName();
         this.password = registrationInfo.getPassword();
+        this.enabled = true;
+    }
+
+    public User(SponsorInfo sponsorInfo) {
+        this.username = sponsorInfo.getEmail();
+        this.name = sponsorInfo.getName();
+        this.password = sponsorInfo.getPassword();
         this.enabled = true;
     }
 }

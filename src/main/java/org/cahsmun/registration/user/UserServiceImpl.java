@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserDetailsService {
 
         if (user.getRoles().size() == 0) {
             List<Role> roles = new ArrayList<Role>();
-            roles.add(new Role("USER"));
+            roles.add(new Role("DELEGATE"));
             user.setRoles(new HashSet<Role>(roles));
         } else {
             user.setRoles(user.getRoles());

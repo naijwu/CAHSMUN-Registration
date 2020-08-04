@@ -30,10 +30,19 @@ public class Sponsor {
     @Column(name="school")
     private String school;
 
+    @Column(name="gender")
+    private String gender;
+
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
 
-    // TODO: Add Gender column for rooming purposes
+    public Sponsor(SponsorInfo sponsorInfo) {
+        this.email = sponsorInfo.getEmail();
+        this.password = sponsorInfo.getPassword();
+        this.name = sponsorInfo.getName();
+        this.school = sponsorInfo.getSchool();
+        this.gender = sponsorInfo.getGender();
+    }
 }

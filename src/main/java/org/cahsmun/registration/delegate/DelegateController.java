@@ -39,7 +39,7 @@ public class DelegateController {
 
     @PostMapping("/registration")
     public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
-        User user = userService.save(new User(registrationInfo));
+        User user = userService.save(new User(registrationInfo)); // returns User object that has just been made
         if(user != null) {
             return delegateRepository.save(new Delegate(registrationInfo));
         } else throw new UserExistException("User is empty. Something went wrong.");
@@ -49,8 +49,9 @@ public class DelegateController {
     public Delegate updateDelegate(@PathVariable long delegate_id, @Valid @RequestBody Delegate delegate) {
         Delegate delegateFromDB = delegateRepository.findById(delegate_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id)); // gets from database the Delegate (w/ the specific id), and then set the new value from the value derived from the request
-        delegateFromDB.setEmail(delegate.getEmail());
-        delegateFromDB.setPassword(delegate.getPassword());
+
+        delegateFromDB.setEmail(delegate.getEmail()); // email shouldn't be able to be changed
+        delegateFromDB.setPassword(delegate.getPassword()); // password changes in the User class -- OR, password also shouldn't be able to be changed -- If wanting change for either email or password, delete and create new registration.
         delegateFromDB.setName(delegate.getName());
         delegateFromDB.setAge(delegate.getAge());
         delegateFromDB.setSchool(delegate.getSchool());
@@ -76,6 +77,7 @@ public class DelegateController {
         delegateFromDB.setWaiver_link(delegate.getWaiver_link());
         delegateFromDB.setWaiver(delegate.getWaiver());
         return delegateRepository.save(delegateFromDB);
+
     }
 
     @DeleteMapping("/delegates/{delegate_id}")

@@ -3,6 +3,7 @@ package org.cahsmun.registration.assignment;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.delegate.Delegate;
 import org.cahsmun.registration.delegate.DelegateRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,14 @@ public class AssignmentController {
     public List<Assignment> retrieveAllAssignment() {
         return StreamSupport.stream(assignmentRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/assignments/sort/id") // READ
+    public List<Assignment> returnAssignments() {
+        Sort sort = Sort.by(
+                Sort.Order.asc("assignment_id")
+        );
+        return StreamSupport.stream(assignmentRepository.findAll(sort).spliterator(),false).collect(Collectors.toList());
     }
 
     @GetMapping("/assignments/{assignment_id}") // Returning a specific delegate
