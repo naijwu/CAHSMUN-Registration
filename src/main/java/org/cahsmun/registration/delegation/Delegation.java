@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -25,5 +26,5 @@ public class Delegation implements Serializable {
     @CreationTimestamp
     @Column(name="last_update")
     @Setter(AccessLevel.NONE)
-    private String last_update;
+    private Date last_update;
 }
