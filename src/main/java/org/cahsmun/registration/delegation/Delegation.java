@@ -1,0 +1,30 @@
+package org.cahsmun.registration.delegation;
+
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@EqualsAndHashCode
+@NoArgsConstructor
+@Table(name = "delegation", schema = "public")
+public class Delegation {
+
+    @Id
+    @Column(name="delegation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long delegation_id;
+
+    @Column(name="sponsor_id")
+    private long sponsor_id;
+
+    @Column(name="name")
+    private String name;
+
+    @CreationTimestamp
+    @Column(name="last_update")
+    @Setter(AccessLevel.NONE)
+    private String last_update;
+}
