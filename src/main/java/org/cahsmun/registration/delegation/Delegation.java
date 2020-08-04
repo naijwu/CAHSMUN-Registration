@@ -4,13 +4,14 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "delegation", schema = "public")
-public class Delegation {
+public class Delegation implements Serializable {
 
     @Id
     @Column(name="delegation_id")

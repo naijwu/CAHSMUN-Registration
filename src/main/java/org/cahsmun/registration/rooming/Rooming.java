@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "rooming", schema = "public")
-public class Rooming {
+public class Rooming implements Serializable {
 
     @Id
     @Column(name="rooming_id")
