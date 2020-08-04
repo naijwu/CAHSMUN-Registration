@@ -39,7 +39,7 @@ public class SponsorController {
     RoleRepository roleRepository;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder sponsorPasswordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
@@ -64,7 +64,7 @@ public class SponsorController {
         }
 
         user.setUsername(user.getUsername());
-        user.setPassword(passwordEncoder().encode(user.getPassword()));
+        user.setPassword(sponsorPasswordEncoder().encode(user.getPassword()));
 
         if (user.getRoles().size() == 0) {
             List<Role> roles = new ArrayList<Role>();
