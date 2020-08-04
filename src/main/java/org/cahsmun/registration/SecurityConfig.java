@@ -93,6 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/sponsorregistration/**").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/delegations/**").permitAll()
+                .and()
                 .authorizeRequests().antMatchers("/registration/**").permitAll()
                 // All other request need to be authenticated
                 .anyRequest().authenticated()
