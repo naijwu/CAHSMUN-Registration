@@ -30,7 +30,7 @@ public class SponsorController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/sponsors")
+    @PostMapping("/sponsorregistration")
     public Sponsor createSponsor(@Valid @RequestBody SponsorInfo sponsorInfo) throws UserExistException {
         User user = userService.save(new User(sponsorInfo)); // returns User object that has just been made
         if(user != null) {
