@@ -55,10 +55,6 @@ public class Listener {
                     payload, sigHeader, endpointSecret
             );
 
-        } catch (JsonSyntaxException e) {
-            // Invalid payload
-            response.status(400);
-            return "";
         } catch (SignatureVerificationException e) {
             // Invalid signature
             response.status(400);
