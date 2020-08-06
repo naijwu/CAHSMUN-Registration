@@ -27,14 +27,14 @@ public class Listener {
     @Resource
     DelegateRepository delegateRepository; // will be used to save payment information if payment successful
 
-    @RequestMapping(value = "/listener", method = RequestMethod.POST)
-    public Object listener(Request request, Response response)  throws IOException {
-        return handle(request, response);
+    /*
+    public Object listener(Request request, Response response) throws IOException {
+        return handler(request, response);
     }
+    */
 
-
-    // Using the Spark framework (http://sparkjava.com)
-    public Object handle(Request request, Response response) {
+    @RequestMapping(value = "/listener", method = RequestMethod.POST)
+    public Object handler(Request request, Response response) {
 
         // Set your secret key. Remember to switch to your live secret key in production!
         // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -70,6 +70,7 @@ public class Listener {
         } */
 
 
+        /*
         // Handle the checkout.session.completed event
         if ("checkout.session.completed".equals(event.getType())) {
             Session session = (Session) event.getDataObjectDeserializer().getObject().get();
@@ -77,9 +78,8 @@ public class Listener {
             // Fulfill the purchase...
             handleCheckoutSession(session);
         }
+*/
 
-
-        /*
         EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
         StripeObject stripeObject = null;
         if (dataObjectDeserializer.getObject().isPresent()) {
@@ -90,6 +90,7 @@ public class Listener {
             // instructions on how to handle this case, or return an error here.
             response.status(400);
         }
+
         switch (event.getType()) {
             case "payment_intent.succeeded":
                 PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
@@ -104,7 +105,7 @@ public class Listener {
                 // Unexpected event type
                 response.status(400);
                 return "";
-        }*/
+        }
 
 
         response.status(200);
@@ -113,7 +114,7 @@ public class Listener {
 
     public void handleCheckoutSession(Session session) {
 
-        // Payment success
+        // Check payment success/failure,
         // save payment data information into the delegate
 
     }
