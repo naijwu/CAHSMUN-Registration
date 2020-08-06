@@ -8,10 +8,7 @@ import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.delegate.DelegateRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spark.Request;
 import spark.Response;
 
@@ -27,13 +24,13 @@ public class Listener {
     @Resource
     DelegateRepository delegateRepository; // will be used to save payment information if payment successful
 
-    /*
-    public Object listener(Request request, Response response) throws IOException {
+    @RequestMapping(value = "/listener", method = RequestMethod.POST)
+    public Object listener(@RequestBody Request request, Response response) throws IOException {
         return handler(request, response);
     }
-    */
 
-    @RequestMapping(value = "/listener", method = RequestMethod.POST)
+
+    // Using the Spark framework (http://sparkjava.com)
     public Object handler(Request request, Response response) {
 
         // Set your secret key. Remember to switch to your live secret key in production!
@@ -43,7 +40,7 @@ public class Listener {
         // You can find your endpoint's secret in your webhook settings
         String endpointSecret = "whsec_MffGhsa9kXv0s7sbxeKHQ6F54qlHZrpA";
 
-        String payload = request.body();
+        String payload = request.body(); // TODO: FIX the issue here
         String sigHeader = request.headers("Stripe-Signature");
         Event event = null;
 
