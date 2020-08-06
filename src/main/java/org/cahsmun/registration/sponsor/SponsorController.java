@@ -50,6 +50,17 @@ public class SponsorController {
                 .collect(Collectors.toList());
     }
 
+    @PutMapping("/sponsors/{sponsor_id}")
+    public Sponsor updateSponsor(@PathVariable long sponsor_id, @Valid @RequestBody Sponsor sponsor) {
+        Sponsor sponsorFromDB = sponsorRepository.findById(sponsor_id).orElseThrow(() -> new ResourceNotFoundException("Sponsor not found with ID " + sponsor_id));
+
+        sponsorFromDB.setName(sponsor.getName());
+        sponsorFromDB.setSchool(sponsor.getSchool());
+        sponsorFromDB.setGender(sponsor.getGender());
+
+        return sponsorRepository.save(sponsorFromDB);
+    }
+
     @PostMapping("/sponsorregistration")
     public Sponsor createSponsor(@Valid @RequestBody SponsorInfo sponsorInfo) throws UserExistException {
         // User user = userService.save(new User(sponsorInfo)); // returns User object that has just been made
