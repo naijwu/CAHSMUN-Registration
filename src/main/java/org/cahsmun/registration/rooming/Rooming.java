@@ -38,6 +38,9 @@ public class Rooming implements Serializable {
     @Column(name="delegate_four")
     private long delegate_four;
 
+    @Column(name="editable")
+    private long editable;
+
     @CreationTimestamp
     @Column(name="last_update")
     @Setter(AccessLevel.NONE)

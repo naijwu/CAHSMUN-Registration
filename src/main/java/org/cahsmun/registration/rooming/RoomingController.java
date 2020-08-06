@@ -20,7 +20,7 @@ public class RoomingController {
     RoomingRepository roomingRepository;
 
     @GetMapping("/rooms")
-    public List<Rooming> retrieveAllDelegations() {
+    public List<Rooming> retrieveAllRoomings() {
         return StreamSupport.stream(roomingRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
