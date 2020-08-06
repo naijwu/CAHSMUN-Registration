@@ -37,7 +37,7 @@ public class DelegationController {
     }
 
     @PostMapping("/{sponsor_id}/delegations")
-    public void createDelegation(@PathVariable long sponsor_id, @Valid @RequestBody Delegation delegation) throws UserExistException {
+    public Delegation createDelegation(@PathVariable long sponsor_id, @Valid @RequestBody Delegation delegation) throws UserExistException {
 
         Sponsor sponsor = sponsorRepository.findById(sponsor_id).orElseThrow(() -> new ResourceNotFoundException("Sponsor not found with ID: " + sponsor_id));
 
@@ -45,5 +45,7 @@ public class DelegationController {
 
         sponsor.setDelegation_id(newDelegation.getDelegation_id());
         sponsorRepository.save(sponsor);
+
+        return newDelegation;
     }
 }
