@@ -1,8 +1,10 @@
 package org.cahsmun.registration;
 
+import com.google.gson.JsonSyntaxException;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.*;
+import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.delegate.DelegateRepository;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import spark.Request;
 import spark.Response;
-import spark.Session;
-import spark.Spark;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +55,11 @@ public class Listener {
                     payload, sigHeader, endpointSecret
             );
 
-        } catch (SignatureVerificationException e) {
+        } catch (JsonSyntaxException e) {
+            // Invalid payload
+            response.status(400);
+            return "";
+        }  catch (SignatureVerificationException e) {
             // Invalid signature
             response.status(400);
             return "";
@@ -66,6 +70,16 @@ public class Listener {
         } */
 
 
+        // Handle the checkout.session.completed event
+        if ("checkout.session.completed".equals(event.getType())) {
+            Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+
+            // Fulfill the purchase...
+            handleCheckoutSession(session);
+        }
+
+
+        /*
         EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
         StripeObject stripeObject = null;
         if (dataObjectDeserializer.getObject().isPresent()) {
@@ -76,16 +90,10 @@ public class Listener {
             // instructions on how to handle this case, or return an error here.
             response.status(400);
         }
-
         switch (event.getType()) {
             case "payment_intent.succeeded":
                 PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
                 System.out.println("PaymentIntent was successful!");
-
-
-                // Payment success
-                    // save payment data information into the delegate
-
                 break;
             case "payment_method.attached":
                 PaymentMethod paymentMethod = (PaymentMethod) stripeObject;
@@ -96,10 +104,17 @@ public class Listener {
                 // Unexpected event type
                 response.status(400);
                 return "";
-        }
+        }*/
 
 
         response.status(200);
         return "";
+    }
+
+    public void handleCheckoutSession(Session session) {
+
+        // Payment success
+        // save payment data information into the delegate
+
     }
 }
