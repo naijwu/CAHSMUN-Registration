@@ -1,6 +1,5 @@
 package org.cahsmun.registration;
 
-import com.google.gson.JsonSyntaxException;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.*;
@@ -45,10 +44,6 @@ public class Listener {
 
         try {
             /*
-            event = Webhook.constructEvent(
-                    payload, sigHeader, endpointSecret
-            );
-
             event = Event.GSON.fromJson(payload, Event.class);
             */
             event = Webhook.constructEvent(
@@ -59,7 +54,11 @@ public class Listener {
             // Invalid signature
             response.status(400);
             return "";
-        }
+        }/* catch (JsonSyntaxException e) {
+            // Invalid payload
+            response.status(400);
+            return "";
+        } */
 
 
         EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
