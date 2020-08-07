@@ -56,6 +56,9 @@ public class RoomingController {
         return roomingRepository.save(rooming);
     }
 
+    /*
+    // removed rooming_id from delegate table
+
     @PostMapping("/room/bind/{room_id}/{room_slot}/{delegate_id}")
     public Rooming bindRooming(@PathVariable long room_id, @PathVariable long delegate_id, @PathVariable int room_slot) {
         Rooming rooming = roomingRepository.findById(room_id).orElseThrow(() -> new ResourceNotFoundException("Rooming not found with ID: " + room_id));
@@ -114,5 +117,5 @@ public class RoomingController {
             System.out.println("Unbind delegate " + param + " from Room with ID " + room_id);
         }
         return "foo";
-    }
+    } */
 }
