@@ -107,4 +107,12 @@ public class RoomingController {
         delegateRepository.save(delegate);
         return roomingRepository.save(rooming);
     }
+
+    @RequestMapping(value="/test/room/unbind/{room_id}/{unbind_delegates}", method=RequestMethod.POST)
+    public String test(@PathVariable long room_id, @PathVariable List<String> unbind_delegates) {
+        for (String param : unbind_delegates) {
+            System.out.println("Unbind delegate " + param + " from Room with ID " + room_id);
+        }
+        return "foo";
+    }
 }

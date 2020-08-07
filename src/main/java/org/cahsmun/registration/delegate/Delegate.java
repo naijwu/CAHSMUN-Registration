@@ -106,8 +106,8 @@ public class Delegate implements Serializable {
     @Column(name="delegation_id")
     private long delegation_id;
 
-    @Column(name="rooming_id")
-    private long rooming_id;
+    // @Column(name="rooming_id")
+    // private long rooming_id;
 
     @CreationTimestamp
     @Column(name="last_update")
@@ -142,6 +142,6 @@ public class Delegate implements Serializable {
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
         this.delegation_id = registrationInfo.getDelegation_id();
-        this.rooming_id = registrationInfo.getRooming_id();
+        // this.rooming_id = registrationInfo.getRooming_id();
     }
 }
