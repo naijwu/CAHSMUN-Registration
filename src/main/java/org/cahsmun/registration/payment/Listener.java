@@ -29,13 +29,13 @@ public class Listener {
             value = "/listener",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public Object listener(@RequestBody Request request, Response response) throws IOException {
+    public String listener(@RequestBody Request request, Response response) throws IOException {
         return handler(request, response);
     }
 
 
     // Using the Spark framework (http://sparkjava.com)
-    public Object handler(Request request, Response response) {
+    public String handler(Request request, Response response) {
 
         // Set your secret key. Remember to switch to your live secret key in production!
         // See your keys here: https://dashboard.stripe.com/account/apikeys
