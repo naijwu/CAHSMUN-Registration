@@ -56,6 +56,13 @@ public class RoomingController {
         return roomingRepository.save(rooming);
     }
 
+    @DeleteMapping("/rooms/{room_id}")
+    public void delete(@PathVariable long room_id) {
+        roomingRepository.findById(room_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Room to delete not found with ID: " + room_id));
+        roomingRepository.deleteById(room_id);
+    }
+
     /*
     // removed rooming_id from delegate table
 
