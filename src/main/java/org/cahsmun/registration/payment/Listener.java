@@ -29,8 +29,8 @@ public class Listener {
             value = "/listener",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public void listener(@RequestBody String request, Response response) throws IOException {
-        System.out.println(request);
+    public Object listener(@RequestBody Request request, Response response) throws IOException {
+        return handler(request, response);
     }
 
 
