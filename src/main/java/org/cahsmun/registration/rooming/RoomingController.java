@@ -51,6 +51,24 @@ public class RoomingController {
         return roomingRepository.save(roomingFromDB);
     }
 
+    @PutMapping("/rooms/lock/{room_id}")
+    public Rooming lockRooming(@PathVariable long room_id) {
+        Rooming roomingFromDB = roomingRepository.findById(room_id).orElseThrow(() -> new ResourceNotFoundException("Room not found with ID " + room_id));
+
+        roomingFromDB.setEditable(0);
+
+        return roomingRepository.save(roomingFromDB);
+    }
+
+    @PutMapping("/rooms/unlock/{room_id}")
+    public Rooming unlockRooming(@PathVariable long room_id) {
+        Rooming roomingFromDB = roomingRepository.findById(room_id).orElseThrow(() -> new ResourceNotFoundException("Room not found with ID " + room_id));
+
+        roomingFromDB.setEditable(1);
+
+        return roomingRepository.save(roomingFromDB);
+    }
+
     @PostMapping("/rooms")
     public Rooming createDelegation(@Valid @RequestBody Rooming rooming) throws UserExistException {
         return roomingRepository.save(rooming);
