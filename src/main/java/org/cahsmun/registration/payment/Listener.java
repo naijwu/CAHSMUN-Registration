@@ -1,4 +1,4 @@
-package org.cahsmun.registration;
+package org.cahsmun.registration.payment;
 
 import com.google.gson.JsonSyntaxException;
 import com.stripe.Stripe;
@@ -26,7 +26,7 @@ public class Listener {
 
     @RequestMapping(value = "/listener", method = RequestMethod.POST)
     public Object listener(@RequestBody Request request, Response response) throws IOException {
-        return handler(request, response);
+        return (request);
     }
 
 
