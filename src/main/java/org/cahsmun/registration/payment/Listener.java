@@ -28,7 +28,7 @@ public class Listener {
     @RequestMapping(
             value = "/listener",
             method = RequestMethod.POST,
-            consumes = "text/plain")
+            consumes = "application/json")
     public void listener(@RequestBody String request, Response response) throws IOException {
         System.out.println(request);
     }
