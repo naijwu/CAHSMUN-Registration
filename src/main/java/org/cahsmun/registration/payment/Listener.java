@@ -24,9 +24,13 @@ public class Listener {
     @Resource
     DelegateRepository delegateRepository; // will be used to save payment information if payment successful
 
-    @RequestMapping(value = "/listener", method = RequestMethod.POST)
-    public Object listener(@RequestBody HttpServletRequest request, Response response) throws IOException {
-        return (request);
+    // @RequestMapping(value = "/listener", method = RequestMethod.POST)
+    @RequestMapping(
+            value = "/listener",
+            method = RequestMethod.POST,
+            consumes = "text/plain")
+    public void listener(@RequestBody String request, Response response) throws IOException {
+        System.out.println(request);
     }
 
 
