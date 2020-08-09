@@ -39,8 +39,8 @@ public class DelegateController {
 
 
     @GetMapping("/delegates/delegation/{delegationId}") // Returning a specific delegate
-    public List<Delegate> retrieveAllDelegatesFromDelegation(@PathVariable long delegation_id) {
-        return StreamSupport.stream(delegateRepository.findByDelegationId(delegation_id).spliterator(), false)
+    public List<Delegate> retrieveAllDelegatesFromDelegation(@PathVariable long delegationId) {
+        return StreamSupport.stream(delegateRepository.findByDelegationId(delegationId).spliterator(), false)
                 .collect(Collectors.toList());
     }
 
