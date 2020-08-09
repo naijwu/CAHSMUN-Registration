@@ -20,7 +20,7 @@ public class Sponsor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sponsor_id;
 
-    @Column(name="delegation_id")
+    @Column(name="delegationId")
     private long delegation_id;
 
     @Column(name="email")

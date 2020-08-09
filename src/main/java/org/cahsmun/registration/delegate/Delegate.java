@@ -1,11 +1,9 @@
 package org.cahsmun.registration.delegate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.cahsmun.registration.assignment.Assignment;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*; // Entity and table annotations
@@ -103,8 +101,8 @@ public class Delegate implements Serializable {
     @Column(name="assignment_id")
     private long assignment_id;
 
-    @Column(name="delegation_id")
-    private long delegation_id;
+    @Column(name="delegationId")
+    private long delegationId;
 
     // @Column(name="rooming_id")
     // private long rooming_id;
@@ -141,7 +139,7 @@ public class Delegate implements Serializable {
         this.waiver_link = registrationInfo.getWaiver_link();
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
-        this.delegation_id = registrationInfo.getDelegation_id();
+        this.delegationId = registrationInfo.getDelegation_id();
         // this.rooming_id = registrationInfo.getRooming_id();
     }
 }

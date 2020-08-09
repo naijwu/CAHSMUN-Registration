@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DelegateRepository extends PagingAndSortingRepository<Delegate, Long> {
 
-    List<Delegate> findByDelegation_id(long delegation_id);
+    List<Delegate> findByDelegationId(long delegation_id);
 }

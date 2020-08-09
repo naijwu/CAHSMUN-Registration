@@ -17,7 +17,7 @@ public class Rooming implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long rooming_id;
 
-    @Column(name="delegation_id")
+    @Column(name="delegationId")
     private long delegation_id;
 
     @Column(name="sponsor_id")

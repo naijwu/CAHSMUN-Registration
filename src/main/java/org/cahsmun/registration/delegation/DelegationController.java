@@ -30,7 +30,7 @@ public class DelegationController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/delegations/{delegation_id}")
+    @GetMapping("/delegations/{delegationId}")
     public Delegation findById(@PathVariable long delegation_id) {
         return delegationRepository.findById(delegation_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
