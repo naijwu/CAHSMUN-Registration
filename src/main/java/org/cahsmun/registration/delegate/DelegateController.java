@@ -37,6 +37,14 @@ public class DelegateController {
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
     }
 
+
+    @GetMapping("/delegates/{delegation_id}") // Returning a specific delegate
+    public List<Delegate> retrieveAllDelegatesFromDelegation(@PathVariable long delegation_id) {
+        return StreamSupport.stream(delegateRepository.findByDelegation_id(delegation_id).spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
+
     @PostMapping("/registration")
     public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
         User user = userService.save(new User(registrationInfo)); // returns User object that has just been made
