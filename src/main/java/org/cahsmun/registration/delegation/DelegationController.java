@@ -52,13 +52,13 @@ public class DelegationController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/delegations/{delegationId}")
+    @GetMapping("/delegations/{delegation_id}")
     public Delegation findById(@PathVariable long delegation_id) {
         return delegationRepository.findById(delegation_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
     }
 
-    @PutMapping("/delegation/enable/{delegationId}")
+    @PutMapping("/delegation/enable/{delegation_id}")
     public Delegation enableDelegation(@PathVariable long delegation_id) {
         Delegation delegationFromDB = delegationRepository.findById(delegation_id)
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
