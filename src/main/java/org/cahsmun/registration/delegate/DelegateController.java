@@ -88,6 +88,7 @@ public class DelegateController {
         delegateFromDB.setPayment_status(delegate.getPayment_status());
         delegateFromDB.setWaiver_link(delegate.getWaiver_link());
         delegateFromDB.setWaiver(delegate.getWaiver());
+        delegateFromDB.setDelegationId(delegate.getDelegationId());
         return delegateRepository.save(delegateFromDB);
     }
 
