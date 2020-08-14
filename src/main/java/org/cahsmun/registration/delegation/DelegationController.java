@@ -118,7 +118,7 @@ public class DelegationController {
     }
 
     // Registering AS DELEGATE
-    @PostMapping("/delegations/sponsor/register")
+    @PostMapping("/delegations/delegate/register")
     public Delegation createDelegationAsDelegate(@Valid @RequestBody DelegationInfo delegationInfo) throws UserExistException {
         /*
             Three steps:
