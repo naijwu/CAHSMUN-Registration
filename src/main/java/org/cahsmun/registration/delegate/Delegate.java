@@ -102,7 +102,7 @@ public class Delegate implements Serializable {
     @Column(name="assignment_id")
     private long assignment_id;
 
-    @Column(name="delegationId")
+    @Column(name="delegationid") // postgresql is not case sensitive? what?
     private long delegationId;
 
     @Column(name="is_head")
