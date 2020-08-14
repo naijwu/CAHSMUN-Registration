@@ -58,6 +58,16 @@ public class DelegationController {
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
     }
 
+    @PutMapping("/delegation/enable/{delegationId}")
+    public Delegation enableDelegation(@PathVariable long delegation_id) {
+        Delegation delegationFromDB = delegationRepository.findById(delegation_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
+
+        delegationFromDB.setEnabled(1);
+
+        return delegationRepository.save(delegationFromDB);
+    }
+
     // TODO: (1) Handle delegation activation (enable), (2) Delegation editing, (3) Delegation deleting
 
     /*
@@ -107,8 +117,7 @@ public class DelegationController {
         userRepository.save(user);
 
         // STEP TWO
-        sponsorRepository.save(new Sponsor(delegationInfo));
-        Sponsor createdSponsor = sponsorRepository.findByEmail(delegationInfo.getEmail());
+        Sponsor createdSponsor = sponsorRepository.save(new Sponsor(delegationInfo));
 
         // STEP THREE
         Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo));
@@ -151,11 +160,10 @@ public class DelegationController {
         userRepository.save(user);
 
         // STEP TWO
-        delegateRepository.save(new Delegate(delegationInfo));
-        Delegate createdDelegate = delegateRepository.findByEmail(delegationInfo.getEmail());
+        Delegate createdDelegate = delegateRepository.save(new Delegate(delegationInfo));
 
         // STEP THREE
-        Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo));
+        Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo)); // TODO: FIX ISSUE -- Head_ID COLUMN DOESN'T GET UPDATED w/ DELEGATE'S ID, REGISTRANT_POSITION COLUMN DOESN'T GET UPDATED AS WELL
         createdDelegation.setHead_id(createdDelegate.getDelegate_id()); // THIS WILL HAVE TO CONTINUE ON DELEGATE REGISTRATION
 
         if(user != null) {
