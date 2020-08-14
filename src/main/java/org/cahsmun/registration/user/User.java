@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.cahsmun.registration.delegate.RegistrationInfo;
+import org.cahsmun.registration.delegation.DelegationInfo;
 import org.cahsmun.registration.role.Role;
 import org.cahsmun.registration.sponsor.SponsorInfo;
 
@@ -50,10 +51,19 @@ public class User implements Serializable {
         this.enabled = true;
     }
 
+    /*
     public User(SponsorInfo sponsorInfo) {
         this.username = sponsorInfo.getEmail();
         this.name = sponsorInfo.getName();
         this.password = sponsorInfo.getPassword();
+        this.enabled = true;
+    }
+    */
+
+    public User(DelegationInfo delegationInfo) {
+        this.username = delegationInfo.getEmail();
+        this.name = delegationInfo.getName();
+        this.password = delegationInfo.getPassword();
         this.enabled = true;
     }
 }

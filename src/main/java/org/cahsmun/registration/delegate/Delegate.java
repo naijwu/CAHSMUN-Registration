@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cahsmun.registration.delegation.DelegationInfo;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*; // Entity and table annotations
@@ -104,6 +105,9 @@ public class Delegate implements Serializable {
     @Column(name="delegationId")
     private long delegationId;
 
+    @Column(name="is_head")
+    private int is_head;
+
     // @Column(name="rooming_id")
     // private long rooming_id;
 
@@ -112,7 +116,7 @@ public class Delegate implements Serializable {
     @Setter(AccessLevel.NONE)
     private Date last_update;
 
-    public Delegate(RegistrationInfo registrationInfo) {
+    public Delegate(RegistrationInfo registrationInfo) { // REGISTRATION VIA REGISTRATION FORM
         this.email = registrationInfo.getEmail();
         this.password = registrationInfo.getPassword();
         this.name = registrationInfo.getName();
@@ -140,6 +144,13 @@ public class Delegate implements Serializable {
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
         this.delegationId = registrationInfo.getDelegation_id();
+        this.is_head = 0;
         // this.rooming_id = registrationInfo.getRooming_id();
+    }
+
+    public Delegate(DelegationInfo delegationInfo) { // REGISTRATION VIA DELEGATION FORM (Will have to complete registration via registration form (PUT MAPPING)
+        this.email = delegationInfo.getEmail();
+        this.password = delegationInfo.getPassword();
+        this.is_head = 1;
     }
 }

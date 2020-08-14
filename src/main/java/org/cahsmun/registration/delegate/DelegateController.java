@@ -2,6 +2,7 @@ package org.cahsmun.registration.delegate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.authentication.UserExistException;
+import org.cahsmun.registration.user.UserRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.cahsmun.registration.user.User;
@@ -23,6 +24,9 @@ public class DelegateController {
 
     @Resource
     UserServiceImpl userService;
+
+    @Resource
+    UserRepository userRepository;
 
     // CRUD Methods
     @GetMapping("/delegates") // Returns list of all delegates; will be used by DA
@@ -85,7 +89,41 @@ public class DelegateController {
         delegateFromDB.setWaiver_link(delegate.getWaiver_link());
         delegateFromDB.setWaiver(delegate.getWaiver());
         return delegateRepository.save(delegateFromDB);
+    }
 
+    @PutMapping("/registration/head") // updates
+    public Delegate registerHeadDelegate(@Valid @RequestBody Delegate delegate) {
+
+        Delegate delegateFromDB = delegateRepository.findByEmail(delegate.getEmail());
+
+        // delegateFromDB.setEmail(delegate.getEmail()); // email shouldn't be able to be changed
+        // delegateFromDB.setPassword(delegate.getPassword()); // password changes in the User class -- OR, password also shouldn't be able to be changed -- If wanting change for either email or password, delete and create new registration.
+        delegateFromDB.setName(delegate.getName());
+        delegateFromDB.setAge(delegate.getAge());
+        delegateFromDB.setSchool(delegate.getSchool());
+        delegateFromDB.setGender(delegate.getGender());
+        delegateFromDB.setPhone_number(delegate.getPhone_number());
+        delegateFromDB.setDate_of_birth(delegate.getDate_of_birth());
+        delegateFromDB.setGrade(delegate.getGrade());
+        delegateFromDB.setAddress(delegate.getAddress());
+        delegateFromDB.setCity(delegate.getCity());
+        delegateFromDB.setProvince(delegate.getProvince());
+        delegateFromDB.setEc_name(delegate.getEc_name());
+        delegateFromDB.setEc_phone_number(delegate.getEc_phone_number());
+        delegateFromDB.setEc_relationship(delegate.getEc_relationship());
+        delegateFromDB.setPast_experience(delegate.getPast_experience());
+        delegateFromDB.setPref_first_comm(delegate.getPref_first_comm());
+        delegateFromDB.setPref_first_country(delegate.getPref_first_country());
+        delegateFromDB.setPref_second_comm(delegate.getPref_second_comm());
+        delegateFromDB.setPref_second_country(delegate.getPref_second_country());
+        delegateFromDB.setPref_third_comm(delegate.getPref_third_comm());
+        delegateFromDB.setPref_third_country(delegate.getPref_third_country());
+        delegateFromDB.setAssignment_id(delegate.getAssignment_id());
+        delegateFromDB.setPayment_status(delegate.getPayment_status());
+        delegateFromDB.setWaiver_link(delegate.getWaiver_link());
+        delegateFromDB.setWaiver(delegate.getWaiver());
+
+        return delegateRepository.save(delegateFromDB);
     }
 
     @DeleteMapping("/delegates/{delegate_id}")

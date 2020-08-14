@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.cahsmun.registration.delegation.DelegationInfo;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -32,22 +33,26 @@ public class Sponsor {
     @Column(name="name")
     private String name;
 
-    @Column(name="school")
-    private String school;
-
-    @Column(name="gender")
-    private String gender;
+    @Column(name="phone_number")
+    private String phone_number;
 
     @CreationTimestamp
     @Column(name = "last_update")
     @Setter(AccessLevel.NONE)
     private Date last_update;
 
+    /*
     public Sponsor(SponsorInfo sponsorInfo) {
         this.email = sponsorInfo.getEmail();
         this.password = sponsorInfo.getPassword();
         this.name = sponsorInfo.getName();
-        this.school = sponsorInfo.getSchool();
-        this.gender = sponsorInfo.getGender();
+    }
+    */
+
+    public Sponsor(DelegationInfo delegationInfo) {
+        this.email = delegationInfo.getEmail();
+        this.password = delegationInfo.getPassword();
+        this.name = delegationInfo.getName();
+        this.phone_number = delegationInfo.getPhone_number();
     }
 }

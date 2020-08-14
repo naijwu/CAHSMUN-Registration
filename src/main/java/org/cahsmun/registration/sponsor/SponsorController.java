@@ -55,12 +55,12 @@ public class SponsorController {
         Sponsor sponsorFromDB = sponsorRepository.findById(sponsor_id).orElseThrow(() -> new ResourceNotFoundException("Sponsor not found with ID " + sponsor_id));
 
         sponsorFromDB.setName(sponsor.getName());
-        sponsorFromDB.setSchool(sponsor.getSchool());
-        sponsorFromDB.setGender(sponsor.getGender());
+        sponsorFromDB.setPhone_number(sponsor.getPhone_number());
 
         return sponsorRepository.save(sponsorFromDB);
     }
 
+    /*
     @PostMapping("/sponsorregistration")
     public Sponsor createSponsor(@Valid @RequestBody SponsorInfo sponsorInfo) throws UserExistException {
         // User user = userService.save(new User(sponsorInfo)); // returns User object that has just been made
@@ -91,6 +91,7 @@ public class SponsorController {
             return sponsorRepository.save(new Sponsor(sponsorInfo));
         } else throw new UserExistException("User is empty. Something went wrong.");
     }
+    */
 
     @GetMapping("/sponsors/{sponsor_id}") // Returning a specific delegate
     public Sponsor findById(@PathVariable long sponsor_id) {
