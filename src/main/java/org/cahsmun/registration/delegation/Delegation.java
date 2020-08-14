@@ -14,7 +14,7 @@ import java.util.Date;
 public class Delegation implements Serializable {
 
     @Id
-    @Column(name="delegationId")
+    @Column(name="delegation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long delegation_id;
 
