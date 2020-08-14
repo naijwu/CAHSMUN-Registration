@@ -143,7 +143,7 @@ public class Delegate implements Serializable {
         this.waiver_link = registrationInfo.getWaiver_link();
         this.waiver = registrationInfo.getWaiver();
         this.assignment_id = registrationInfo.getAssignment_id();
-        this.delegationId = registrationInfo.getDelegation_id();
+        this.delegationId = registrationInfo.getDelegationId();
         this.is_head = 0;
         // this.rooming_id = registrationInfo.getRooming_id();
     }
