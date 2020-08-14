@@ -58,6 +58,8 @@ public class DelegationController {
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegation_id));
     }
 
+    // TODO: (1) Handle delegation activation (enable), (2) Delegation editing, (3) Delegation deleting
+
     /*
     @PostMapping("/{sponsor_id}/delegations")
     public Delegation createDelegation(@PathVariable long sponsor_id, @Valid @RequestBody Delegation delegation) throws UserExistException {

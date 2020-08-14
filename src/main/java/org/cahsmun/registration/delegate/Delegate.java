@@ -152,5 +152,6 @@ public class Delegate implements Serializable {
         this.email = delegationInfo.getEmail();
         this.password = delegationInfo.getPassword();
         this.is_head = 1;
+        this.name = delegationInfo.getName();
     }
 }
