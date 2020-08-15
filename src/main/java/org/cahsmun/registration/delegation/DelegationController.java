@@ -116,12 +116,16 @@ public class DelegationController {
         }
         userRepository.save(user);
 
-        // STEP TWO
+        // STEPS 2 & 3
         Sponsor createdSponsor = sponsorRepository.save(new Sponsor(delegationInfo));
-
-        // STEP THREE
         Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo));
+
         createdDelegation.setHead_id(createdSponsor.getSponsor_id());
+        createdDelegation.setRegistrant_position("Sponsor Teacher/School Advisor");
+        createdSponsor.setDelegation_id(createdDelegation.getDelegation_id());
+
+        sponsorRepository.save(createdSponsor);
+        delegationRepository.save(createdDelegation);
 
         if(user != null) {
             return createdDelegation;
@@ -159,24 +163,12 @@ public class DelegationController {
         }
         userRepository.save(user);
 
-        // STEP TWO & THREE
-        /*
-        Delegate createdDelegate = new Delegate(delegationInfo);
-        Delegation createdDelegation = new Delegation(delegationInfo); // TODO: FIX ISSUE -- Head_ID COLUMN DOESN'T GET UPDATED w/ DELEGATE'S ID, REGISTRANT_POSITION COLUMN DOESN'T GET UPDATED AS WELL
-
-        System.out.println("Delegate ID (head_id in Delegation): " + createdDelegate.getDelegate_id() + " Delegation ID (delegationId in Delegate): " + createdDelegation.getDelegation_id());
-
-        createdDelegation.setHead_id(createdDelegate.getDelegate_id());
-        createdDelegate.setDelegationId(createdDelegation.getDelegation_id());
-
-        delegateRepository.save(createdDelegate);
-        delegationRepository.save(createdDelegation);
-        */
-
+        // STEPS 2 & 3
         Delegate createdDelegate = delegateRepository.save(new Delegate(delegationInfo));
         Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo));
 
         createdDelegation.setHead_id(createdDelegate.getDelegate_id());
+        createdDelegation.setRegistrant_position("Head Delegate");
         createdDelegate.setDelegationId(createdDelegation.getDelegation_id());
 
         delegateRepository.save(createdDelegate);
