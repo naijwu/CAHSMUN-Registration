@@ -29,12 +29,14 @@ public class Listener {
             value = "/listener",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public String listener(@RequestBody String stripeJsonEvent, HttpServletRequest request, Response response) throws IOException {
-        return handler(stripeJsonEvent, request, response);
+    public String listener(@RequestBody String stripeJsonEvent, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        System.out.println(stripeJsonEvent);
+        return stripeJsonEvent;
     }
 
     // Using the Spark framework (http://sparkjava.com)
-    public String handler(String json, HttpServletRequest request, Response response) {
+    public String handler(String json, HttpServletRequest request, HttpServletResponse response) {
 
         // Set your secret key. Remember to switch to your live secret key in production!
         // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -43,10 +45,9 @@ public class Listener {
         // You can find your endpoint's secret in your webhook settings
         String endpointSecret = "whsec_MffGhsa9kXv0s7sbxeKHQ6F54qlHZrpA";
 
-
         String sigHeader = request.getHeader("Stripe-Signature");
 
-        Event event = Event.GSON.fromJson(json, Event.class);
+        Event event;
 
         try {
             /*
@@ -58,11 +59,11 @@ public class Listener {
 
         } catch (JsonSyntaxException e) {
             // Invalid payload
-            response.status(400);
+            response.setStatus(400);
             return "";
         }  catch (SignatureVerificationException e) {
             // Invalid signature
-            response.status(400);
+            response.setStatus(400);
             return "";
         }/* catch (JsonSyntaxException e) {
             // Invalid payload
@@ -89,7 +90,7 @@ public class Listener {
             // Deserialization failed, probably due to an API version mismatch.
             // Refer to the Javadoc documentation on `EventDataObjectDeserializer` for
             // instructions on how to handle this case, or return an error here.
-            response.status(400);
+            response.setStatus(400);
         }
 
         switch (event.getType()) {
@@ -104,12 +105,12 @@ public class Listener {
             // ... handle other event types
             default:
                 // Unexpected event type
-                response.status(400);
+                response.setStatus(400);
                 return "";
         }
 
 
-        response.status(200);
+        response.setStatus(200);
         return "";
     }
 
