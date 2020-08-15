@@ -13,6 +13,7 @@ import spark.Request;
 import spark.Response;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,13 +30,28 @@ public class Listener {
             value = "/listener",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public String listener(@RequestBody Request request, Response response) throws IOException {
+    public String listener(@RequestBody HttpServletRequest request, HttpServletResponse response) throws Exception {
         return handler(request, response);
     }
 
+    String httpServletRequestToString(HttpServletRequest request) throws Exception {
+
+        ServletInputStream mServletInputStream = request.getInputStream();
+        byte[] httpInData = new byte[request.getContentLength()];
+        int retVal = -1;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while ((retVal = mServletInputStream.read(httpInData)) != -1) {
+            for (int i = 0; i < retVal; i++) {
+                stringBuilder.append(Character.toString((char) httpInData[i]));
+            }
+        }
+
+        return stringBuilder.toString();
+    }
 
     // Using the Spark framework (http://sparkjava.com)
-    public String handler(Request request, Response response) {
+    public String handler(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // Set your secret key. Remember to switch to your live secret key in production!
         // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -44,8 +60,8 @@ public class Listener {
         // You can find your endpoint's secret in your webhook settings
         String endpointSecret = "whsec_MffGhsa9kXv0s7sbxeKHQ6F54qlHZrpA";
 
-        String payload = request.body(); // TODO: FIX the issue here
-        String sigHeader = request.headers("Stripe-Signature");
+        String payload = httpServletRequestToString(request); // TODO: FIX the issue here
+        String sigHeader = request.getHeader("Stripe-Signature");
         Event event = null;
 
         try {
@@ -58,11 +74,11 @@ public class Listener {
 
         } catch (JsonSyntaxException e) {
             // Invalid payload
-            response.status(400);
+            response.setStatus(400);
             return "";
         }  catch (SignatureVerificationException e) {
             // Invalid signature
-            response.status(400);
+            response.setStatus(400);
             return "";
         }/* catch (JsonSyntaxException e) {
             // Invalid payload
@@ -89,7 +105,7 @@ public class Listener {
             // Deserialization failed, probably due to an API version mismatch.
             // Refer to the Javadoc documentation on `EventDataObjectDeserializer` for
             // instructions on how to handle this case, or return an error here.
-            response.status(400);
+            response.setStatus(400);
         }
 
         switch (event.getType()) {
@@ -104,12 +120,12 @@ public class Listener {
             // ... handle other event types
             default:
                 // Unexpected event type
-                response.status(400);
+                response.setStatus(400);
                 return "";
         }
 
 
-        response.status(200);
+        response.setStatus(200);
         return "";
     }
 
