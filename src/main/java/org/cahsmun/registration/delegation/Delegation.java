@@ -82,7 +82,7 @@ public class Delegation implements Serializable {
         this.expected_size = delegationInfo.getExpected_size();
         this.has_permission = delegationInfo.getHas_permission(); // should always be true from the front end anyways... more like a EULA type beat
         this.sponsor_present = delegationInfo.getSponsor_present();
-        this.enabled = 0; // always initially false -- has to be activated by DA to activate delegation (allow delegation name to show up on the delegates registration form)
         this.registrant_position = delegationInfo.getRegistrant_position();
+        this.enabled = 0; // always initially false -- has to be activated by DA to activate delegation (allow delegation name to show up on the delegates registration form)
     }
 }

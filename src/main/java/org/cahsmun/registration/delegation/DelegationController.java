@@ -68,7 +68,7 @@ public class DelegationController {
         return delegationRepository.save(delegationFromDB);
     }
 
-    // TODO: (1) Handle delegation activation (enable), (2) Delegation editing, (3) Delegation deleting
+    // TODO: (1) Delegation editing, (2) Delegation deleting
 
     /*
     @PostMapping("/{sponsor_id}/delegations")
@@ -134,7 +134,7 @@ public class DelegationController {
         /*
             Three steps:
             1. Create user account (used for login)
-            2. Create (partial) Delegate (just email and password)
+            2. Create (partial) Delegate (just email, password, and name)
             3. Create delegation w/ sponsor_teacher information (inputted in database)
          */
 
@@ -160,11 +160,14 @@ public class DelegationController {
         userRepository.save(user);
 
         // STEP TWO
-        Delegate createdDelegate = delegateRepository.save(new Delegate(delegationInfo));
+        Delegate createdDelegate = new Delegate(delegationInfo);
 
         // STEP THREE
-        Delegation createdDelegation = delegationRepository.save(new Delegation(delegationInfo)); // TODO: FIX ISSUE -- Head_ID COLUMN DOESN'T GET UPDATED w/ DELEGATE'S ID, REGISTRANT_POSITION COLUMN DOESN'T GET UPDATED AS WELL
+        Delegation createdDelegation = new Delegation(delegationInfo); // TODO: FIX ISSUE -- Head_ID COLUMN DOESN'T GET UPDATED w/ DELEGATE'S ID, REGISTRANT_POSITION COLUMN DOESN'T GET UPDATED AS WELL
         createdDelegation.setHead_id(createdDelegate.getDelegate_id()); // THIS WILL HAVE TO CONTINUE ON DELEGATE REGISTRATION
+
+        delegateRepository.save(createdDelegate);
+        delegationRepository.save(createdDelegation);
 
         if(user != null) {
             return createdDelegation;

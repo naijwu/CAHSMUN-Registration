@@ -18,16 +18,14 @@ public class DelegationInfo implements Serializable {
     private String province;
     private String postal_code;
     private String school_district;
-
     private int has_permission;
-
-    private String registrant_position;
 
     // "Account Information"
     private String name;
     private String phone_number;
     private String email;
     private String password;
+    private String registrant_position;
 
     // "Additional Information"
     private int sponsor_present;
