@@ -8,6 +8,7 @@ import com.stripe.model.*;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import lombok.extern.slf4j.Slf4j;
+import org.cahsmun.registration.delegate.Delegate;
 import org.cahsmun.registration.delegate.DelegateRepository;
 import org.springframework.web.bind.annotation.*;
 import spark.Request;
@@ -33,13 +34,23 @@ public class Listener {
     public String listener(@RequestBody String stripeJsonEvent, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         System.out.println(stripeJsonEvent);
+        handleUpdate(stripeJsonEvent);
+
         return stripeJsonEvent;
     }
 
     public void handleUpdate(String json) {
-        String email = JsonPath.read(json, "$.data.object.customer_email");
+        String email = JsonPath.read(json, "$.data.object.id");
+        String payment_id = JsonPath.read(json, "$.data.object.customer_email");
 
-        System.out.println(email);
+        Delegate justPaid = delegateRepository.findByEmail(email);
+
+        justPaid.setPayment_status(1);
+        justPaid.setPayment_id(payment_id);
+
+        delegateRepository.save(justPaid);
+
+        System.out.println(email + ' ' + payment_id);
     }
 
     // Using the Spark framework (http://sparkjava.com)

@@ -108,6 +108,9 @@ public class Delegate implements Serializable {
     @Column(name="is_head")
     private int is_head;
 
+    @Column(name="payment_id")
+    private String payment_id;
+
     // @Column(name="rooming_id")
     // private long rooming_id;
 
