@@ -34,14 +34,13 @@ public class Listener {
     public String listener(@RequestBody String stripeJsonEvent, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         System.out.println(stripeJsonEvent);
-        handleUpdate(stripeJsonEvent);
 
-        return stripeJsonEvent;
+        return handleUpdate(stripeJsonEvent);
     }
 
-    public void handleUpdate(String json) {
-        String email = JsonPath.read(json, "$.data.object.id");
-        String payment_id = JsonPath.read(json, "$.data.object.customer_email");
+    public String handleUpdate(String jsonEvent) {
+        String payment_id = JsonPath.read(jsonEvent, "$.data.object.id");
+        String email = JsonPath.read(jsonEvent, "$.data.object.customer_email");
 
         Delegate justPaid = delegateRepository.findByEmail(email);
 
@@ -51,6 +50,8 @@ public class Listener {
         delegateRepository.save(justPaid);
 
         System.out.println(email + ' ' + payment_id);
+
+        return jsonEvent;
     }
 
     // Using the Spark framework (http://sparkjava.com)
