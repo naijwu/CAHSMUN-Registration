@@ -41,6 +41,10 @@ public class DelegateController {
                 .orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
     }
 
+    @GetMapping("/delegates/email/{email}") // Returning a specific delegate
+    public Delegate findByEmail(@PathVariable String email) {
+        return delegateRepository.findByEmail(email);
+    }
 
     @GetMapping("/delegates/delegation/{delegationId}") // Returning a specific delegate
     public List<Delegate> retrieveAllDelegatesFromDelegation(@PathVariable long delegationId) {
