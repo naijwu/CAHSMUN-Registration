@@ -1,6 +1,7 @@
 package org.cahsmun.registration.payment;
 
 import com.google.gson.JsonSyntaxException;
+import com.jayway.jsonpath.JsonPath;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.*;
@@ -33,6 +34,12 @@ public class Listener {
 
         System.out.println(stripeJsonEvent);
         return stripeJsonEvent;
+    }
+
+    public void handleUpdate(String json) {
+        String email = JsonPath.read(json, "$.data.object.customer_email");
+
+        System.out.println(email);
     }
 
     // Using the Spark framework (http://sparkjava.com)
