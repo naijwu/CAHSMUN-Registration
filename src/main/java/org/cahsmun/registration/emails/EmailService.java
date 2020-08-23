@@ -1,5 +1,6 @@
 package org.cahsmun.registration.emails;
 
+import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import com.sendgrid.*;
 import org.springframework.web.bind.annotation.*;
@@ -102,17 +103,22 @@ public class EmailService {
 
 
 
-        to_email = "jaewuchun@gmail.com";
+        final JsonObject json = new com.google.gson.JsonObject();
 
+        to_email = "jaewuchun@gmail.com";
 
         Mail mail = new Mail();
         mail.setFrom(new Email("it@cahsmun.org"));
         mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
 
         Personalization personalization = new Personalization();
-        personalization.addSubstitution("full_name", "Example User");
-        personalization.addSubstitution("school_name", "School Name Successfully Added");
+
+        json.addProperty("email", "contact@aimmoth.com");
+        json.addProperty("full_name", "Example Name");
+
+        personalization.addCustomArg("dynamic_template_data", json.toString());
         personalization.addTo(new Email("it@cahsmun.org"));
+
         mail.addPersonalization(personalization);
 
         SendGrid sg = new SendGrid(SENDGRID_API);
