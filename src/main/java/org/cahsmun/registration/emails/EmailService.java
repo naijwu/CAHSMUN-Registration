@@ -103,7 +103,7 @@ public class EmailService {
 
 
 
-        final JsonObject json = new com.google.gson.JsonObject();
+        JsonObject json = new com.google.gson.JsonObject();
 
         to_email = "jaewuchun@gmail.com";
 
@@ -117,7 +117,7 @@ public class EmailService {
         json.addProperty("full_name", "Example Name");
 
         personalization.addCustomArg("dynamic_template_data", json.toString());
-        personalization.addTo(new Email("it@cahsmun.org"));
+        personalization.addTo(new Email("jaewuchun@gmail.com"));
 
         mail.addPersonalization(personalization);
 
