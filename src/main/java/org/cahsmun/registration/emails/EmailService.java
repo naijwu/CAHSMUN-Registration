@@ -9,7 +9,7 @@ import java.io.IOException;
 @RestController
 public class EmailService {
 
-    private final String SENDGRID_API="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";
+    private final String SENDGRID_API="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";
 
     @RequestMapping(
             value = "/sendmail",
