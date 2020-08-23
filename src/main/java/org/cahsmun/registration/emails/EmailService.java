@@ -100,9 +100,9 @@ public class EmailService {
         }
 
 
-        Email from = new Email(from_email);
-        String subject = subject_email;
-        Email to = new Email(to_email);
+        Email from = new Email("it@cahsmun.org");
+        String subject = "Test Subject";
+        Email to = new Email("jaewuchun@gmail.com");
         Content content = new Content("text/plain", "Test");
         Mail mail = new Mail(from, subject, to, content);
 
