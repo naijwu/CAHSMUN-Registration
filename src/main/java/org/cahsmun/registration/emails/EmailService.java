@@ -39,17 +39,6 @@ public class EmailService {
     private String login_passcode; // For delegate registration, just tell them to log in to see their information)
 
 
-    /* Request JSON Object Format:
-
-        {
-            "type": "..",
-            "to_email": "..",
-            "full_name": ".."
-        }
-
-     */
-
-
     @RequestMapping(
             value = "/sendmail",
             method = RequestMethod.POST,
@@ -64,6 +53,26 @@ public class EmailService {
         if (type.equals("SRC")) {
             mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
             // send email to registrant about School registration, sent by DA
+
+            /*
+
+                {
+                    "type": "SRC",
+                    "to_email": "jaewuchun@gmail.com",
+
+                    "full_name": "",
+                    "login_email": "",
+                    "login_passcode": "",
+
+                    "school_name": "",
+                    "school_address":"",
+                    "school_city":"",
+                    "school_province":"",
+                    "school_postal":"",
+                }
+
+             */
+
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
             mail.setFrom(new Email("delegates@cahsmun.org"));
@@ -89,11 +98,22 @@ public class EmailService {
             personalization.addDynamicTemplateData("school_postal", school_postal);
 
             personalization.addTo(new Email(to_email));
-
-
         } else if (type.equals("DRC")) {
             mail.setTemplateId("d-66a3d695111747af80148e83bcf6c328");
             // send email to registrant about Delegate registration, sent by DA
+
+            /*
+
+                {
+                    "type": "DRC",
+                    "to_email": "jaewuchun@gmail.com",
+
+                    "full_name": "",
+                    "login_email": "",
+                    "login_passcode": "",
+                }
+
+             */
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
             mail.setFrom(new Email("delegates@cahsmun.org"));
@@ -111,6 +131,18 @@ public class EmailService {
             mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
             // send email to DA
 
+            /*
+
+                {
+                    "type": "SRN",
+                    "to_email": "jaewuchun@gmail.com",
+
+                    "full_name": "",
+                    "school_name": ""
+                }
+
+             */
+
             to_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes
             mail.setFrom(new Email("it@cahsmun.org"));
 
@@ -119,12 +151,9 @@ public class EmailService {
 
             personalization.addDynamicTemplateData("full_name", full_name);
             personalization.addDynamicTemplateData("school_name", school_name);
-
-            mail.setSubject("[CRS] New School Registration: " + school_name);
+            personalization.setSubject("[CRS] New School Registration: " + school_name);
 
             personalization.addTo(new Email(to_email));
-        } else if (type.equals("TEST")) {
-
         }
 
 
