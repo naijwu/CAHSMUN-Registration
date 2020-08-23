@@ -113,7 +113,7 @@ public class EmailService {
 
         Personalization personalization = new Personalization();
 
-        json.addProperty("email", "contact@aimmoth.com");
+        json.addProperty("email", "jaewuchun@gmail.com");
         json.addProperty("full_name", "Example Name");
 
         personalization.addCustomArg("dynamic_template_data", json.toString());
