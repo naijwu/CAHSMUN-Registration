@@ -100,17 +100,31 @@ public class EmailService {
         }
 
 
+
+
+        to_email = "jaewuchun@gmail.com";
+
         Email from = new Email("it@cahsmun.org");
         String subject = "Test Subject";
-        Email to = new Email("jaewuchun@gmail.com");
+        Email to = new Email(to_email);
         Content content = new Content("text/plain", "Test");
         Mail mail = new Mail(from, subject, to, content);
+
+        mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
+
+        Personalization personalization = new Personalization();
+        personalization.addSubstitution("full_name", "Example User");
+        personalization.addSubstitution("school_name", "School Name Successfully Added");
+        personalization.addSubstitution("name", "Example User");
+        personalization.addSubstitution("city", "Denver");
+        mail.addPersonalization(personalization);
 
         SendGrid sg = new SendGrid(SENDGRID_API);
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
+            // request.setBody(emailJsonBody);
             request.setBody(mail.build());
             Response response = sg.api(request);
             System.out.println(response.getStatusCode());
@@ -119,7 +133,6 @@ public class EmailService {
         } catch (IOException ex) {
             throw ex;
         }
-
         return emailInfoJson;
     }
 }
