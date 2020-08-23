@@ -56,14 +56,17 @@ public class EmailService {
             consumes = "application/json")
     public String sendEmail(@RequestBody String emailInfoJson) throws IOException {
 
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+
         type = JsonPath.read(emailInfoJson, "$.type");
 
-        if (type == "SRC") {
+        if (type.equals("SRC")) {
+            mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
             // send email to registrant about School registration, sent by DA
-            subject_email = "CAHSMUN 2021 School Registration Confirmation";
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
-            from_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes (need to test reply)
+            mail.setFrom(new Email("jaewuchun@gmail.com"));
 
             full_name = JsonPath.read(emailInfoJson, "$.full_name");
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
@@ -75,61 +78,56 @@ public class EmailService {
             school_province = JsonPath.read(emailInfoJson, "$.school_province");
             school_postal = JsonPath.read(emailInfoJson, "$.school_postal");
 
+            personalization.addDynamicTemplateData("full_name", full_name);
+            personalization.addDynamicTemplateData("login_email", login_email);
+            personalization.addDynamicTemplateData("login_passcode", login_passcode);
 
-        } else if (type == "DRC") {
+            personalization.addDynamicTemplateData("school_name", school_name);
+            personalization.addDynamicTemplateData("school_address", school_address);
+            personalization.addDynamicTemplateData("school_city", school_city);
+            personalization.addDynamicTemplateData("school_province", school_province);
+            personalization.addDynamicTemplateData("school_postal", school_postal);
+
+            personalization.addTo(new Email(to_email));
+
+
+        } else if (type.equals("DRC")) {
+            mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
             // send email to registrant about Delegate registration, sent by DA
-            subject_email = "CAHSMUN 2021 Delegate Registration Confirmation";
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
-            from_email = "jaewuchun@gmail.com";
+            mail.setFrom(new Email("jaewuchun@gmail.com"));
 
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
             login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
 
+            personalization.addDynamicTemplateData("login_email", login_email);
+            personalization.addDynamicTemplateData("login_passcode", login_passcode);
 
-        } else if (type == "SRN") {
+            personalization.addTo(new Email(to_email));
+        } else if (type.equals("SRN")) {
+            mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
             // send email to DA
-            subject_email = "[CRS] School Registration Notification";
 
             to_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes
-            from_email = "it@cahsmun.org";
+            mail.setFrom(new Email("it@cahsmun.org"));
 
             full_name = JsonPath.read(emailInfoJson, "$.full_name");
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
             login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
 
             school_name = JsonPath.read(emailInfoJson, "$.school_name");
-        } else if (type == "TEST") {
 
-            from_email = "it@cahsmun.org";
-            subject_email = "Sendgrid Test";
-            to_email = JsonPath.read(emailInfoJson, "$.to_email");
+            personalization.addDynamicTemplateData("full_name", full_name);
+            personalization.addDynamicTemplateData("login_email", login_email);
+            personalization.addDynamicTemplateData("login_passcode", login_passcode);
+            personalization.addDynamicTemplateData("school_name", school_name);
+
+            personalization.addTo(new Email(to_email));
+        } else if (type.equals("TEST")) {
+
         }
 
-
-
-
-        // JsonObject json = new com.google.gson.JsonObject();
-
-        to_email = "jaewuchun@gmail.com";
-
-        Mail mail = new Mail();
-        mail.setFrom(new Email("it@cahsmun.org"));
-        mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
-
-        Personalization personalization = new Personalization();
-        personalization.addDynamicTemplateData("full_name", "Testing Templates");
-        personalization.addTo(new Email(to_email));
-
-        /*
-
-        Personalization personalization = new Personalization();
-
-        json.addProperty("email", "jaewuchun@gmail.com");
-        json.addProperty("full_name", "Example Name");
-
-        personalization.addCustomArg("dynamic_template_data", json.toString());
-        */
 
         mail.addPersonalization(personalization);
 
