@@ -16,7 +16,7 @@ public class EmailService {
             method = RequestMethod.POST,
             consumes = "application/json")
     public String sendEmail(@RequestBody String emailInfoJson) throws IOException {
-        Email from = new Email("test@example.com");
+        Email from = new Email("it@cahsmun.org");
         String subject = "Sending with SendGrid is Fun";
         Email to = new Email("test@example.com");
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
