@@ -115,8 +115,6 @@ public class EmailService {
         Personalization personalization = new Personalization();
         personalization.addSubstitution("full_name", "Example User");
         personalization.addSubstitution("school_name", "School Name Successfully Added");
-        personalization.addSubstitution("name", "Example User");
-        personalization.addSubstitution("city", "Denver");
         mail.addPersonalization(personalization);
 
         SendGrid sg = new SendGrid(SENDGRID_API);
