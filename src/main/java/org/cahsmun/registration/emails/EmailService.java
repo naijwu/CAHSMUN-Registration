@@ -116,9 +116,7 @@ public class EmailService {
         json.addProperty("email", "jaewuchun@gmail.com");
         json.addProperty("full_name", "Example Name");
 
-        String jsonTest = "\"full_name\": \"Student Name\"";
-
-        personalization.addCustomArg("dynamic_template_data", jsonTest);
+        personalization.addCustomArg("dynamic_template_data", json.toString());
         personalization.addTo(new Email("jaewuchun@gmail.com"));
 
         mail.addPersonalization(personalization);
@@ -130,6 +128,7 @@ public class EmailService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
+            System.out.println(json.toString());
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
