@@ -107,7 +107,7 @@ public class EmailService {
 
         Mail mail = new Mail();
         mail.setFrom(new Email("it@cahsmun.org"));
-        mail.setTemplateId("d-2c214ac919e84170b21855cc129b4a5f");
+        mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
 
         Personalization personalization = new Personalization();
         personalization.addSubstitution("full_name", "Example User");
