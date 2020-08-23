@@ -116,8 +116,8 @@ public class EmailService {
         json.addProperty("email", "jaewuchun@gmail.com");
         json.addProperty("full_name", "Example Name");
 
-        personalization.addCustomArg("dynamic_template_data", "[" + json.toString() + "]");
-        personalization.addTo(new Email("jaewuchun@gmail.com"));
+        personalization.addCustomArg("dynamic_template_data", json.toString());
+        personalization.addTo(new Email(to_email));
 
         mail.addPersonalization(personalization);
 
