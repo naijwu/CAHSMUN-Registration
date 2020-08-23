@@ -2,7 +2,13 @@ package org.cahsmun.registration.emails;
 
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
-import com.sendgrid.*;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -103,7 +109,7 @@ public class EmailService {
 
 
 
-        JsonObject json = new com.google.gson.JsonObject();
+        // JsonObject json = new com.google.gson.JsonObject();
 
         to_email = "jaewuchun@gmail.com";
 
@@ -112,12 +118,18 @@ public class EmailService {
         mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
 
         Personalization personalization = new Personalization();
+        personalization.addDynamicTemplateData("full_name", "Testing Templates");
+        personalization.addTo(new Email(to_email));
+
+        /*
+
+        Personalization personalization = new Personalization();
 
         json.addProperty("email", "jaewuchun@gmail.com");
         json.addProperty("full_name", "Example Name");
 
         personalization.addCustomArg("dynamic_template_data", json.toString());
-        personalization.addTo(new Email(to_email));
+        */
 
         mail.addPersonalization(personalization);
 
@@ -128,7 +140,6 @@ public class EmailService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-            System.out.println(json.toString());
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
