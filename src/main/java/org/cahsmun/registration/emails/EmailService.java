@@ -1,5 +1,6 @@
 package org.cahsmun.registration.emails;
 
+import com.jayway.jsonpath.JsonPath;
 import com.sendgrid.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +12,98 @@ public class EmailService {
 
     private final String SENDGRID_API="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";
 
+    private String type; // DRC: Del Reg Confirm (To Registrant), SRC: School Reg Confirm (To Registrant), SRN: School Reg Notification (To DA)
+    private String to_email; // To the one that just created the account/to DA
+    private String from_email; // DA
+
+    private String subject_email;
+
+    private String full_name; // name of who to sending to
+
+    // School registration content
+    private String school_name;
+    private String school_address;
+    private String school_city;
+    private String school_province;
+    private String school_postal;
+
+    // School + Delegate registrant content
+    private String login_email;
+    private String login_passcode; // For delegate registration, just tell them to log in to see their information)
+
+
+    /* Request JSON Object Format:
+
+        {
+            "type": "..",
+            "to_email": "..",
+            "full_name": ".."
+        }
+
+     */
+
+
     @RequestMapping(
             value = "/sendmail",
             method = RequestMethod.POST,
             consumes = "application/json")
     public String sendEmail(@RequestBody String emailInfoJson) throws IOException {
-        Email from = new Email("it@cahsmun.org");
-        String subject = "Sending with SendGrid is Fun";
-        Email to = new Email("test@example.com");
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+
+        type = JsonPath.read(emailInfoJson, "$.type");
+
+        if (type == "SRC") {
+            // send email to registrant about School registration, sent by DA
+            subject_email = "CAHSMUN 2021 School Registration Confirmation";
+
+            to_email = JsonPath.read(emailInfoJson, "$.to_email");
+            from_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes (need to test reply)
+
+            full_name = JsonPath.read(emailInfoJson, "$.full_name");
+            login_email = JsonPath.read(emailInfoJson, "$.login_email");
+            login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
+
+            school_name = JsonPath.read(emailInfoJson, "$.school_name");
+            school_address = JsonPath.read(emailInfoJson, "$.school_address");
+            school_city = JsonPath.read(emailInfoJson, "$.school_city");
+            school_province = JsonPath.read(emailInfoJson, "$.school_province");
+            school_postal = JsonPath.read(emailInfoJson, "$.school_postal");
+
+
+        } else if (type == "DRC") {
+            // send email to registrant about Delegate registration, sent by DA
+            subject_email = "CAHSMUN 2021 Delegate Registration Confirmation";
+
+            to_email = JsonPath.read(emailInfoJson, "$.to_email");
+            from_email = "jaewuchun@gmail.com";
+
+            login_email = JsonPath.read(emailInfoJson, "$.login_email");
+            login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
+
+
+        } else if (type == "SRN") {
+            // send email to DA
+            subject_email = "[CRS] School Registration Notification";
+
+            to_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes
+            from_email = "it@cahsmun.org";
+
+            full_name = JsonPath.read(emailInfoJson, "$.full_name");
+            login_email = JsonPath.read(emailInfoJson, "$.login_email");
+            login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
+
+            school_name = JsonPath.read(emailInfoJson, "$.school_name");
+        } else if (type == "TEST") {
+
+            from_email = "it@cahsmun.org";
+            subject_email = "Sendgrid Test";
+            to_email = JsonPath.read(emailInfoJson, "$.to_email");
+        }
+
+
+        Email from = new Email(from_email);
+        String subject = subject_email;
+        Email to = new Email(to_email);
+        Content content = new Content("text/plain", "Test");
         Mail mail = new Mail(from, subject, to, content);
 
         SendGrid sg = new SendGrid(SENDGRID_API);
