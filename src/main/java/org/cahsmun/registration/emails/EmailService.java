@@ -66,7 +66,7 @@ public class EmailService {
             // send email to registrant about School registration, sent by DA
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
-            mail.setFrom(new Email("jaewuchun@gmail.com"));
+            mail.setFrom(new Email("delegates@cahsmun.org"));
 
             full_name = JsonPath.read(emailInfoJson, "$.full_name");
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
@@ -96,7 +96,7 @@ public class EmailService {
             // send email to registrant about Delegate registration, sent by DA
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
-            mail.setFrom(new Email("jaewuchun@gmail.com"));
+            mail.setFrom(new Email("delegates@cahsmun.org"));
 
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
             login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
