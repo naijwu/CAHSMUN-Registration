@@ -92,36 +92,35 @@ public class EmailService {
 
 
         } else if (type.equals("DRC")) {
-            mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
+            mail.setTemplateId("d-66a3d695111747af80148e83bcf6c328");
             // send email to registrant about Delegate registration, sent by DA
 
             to_email = JsonPath.read(emailInfoJson, "$.to_email");
             mail.setFrom(new Email("delegates@cahsmun.org"));
 
+            full_name = JsonPath.read(emailInfoJson, "$.full_name");
             login_email = JsonPath.read(emailInfoJson, "$.login_email");
             login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
 
+            personalization.addDynamicTemplateData("full_name", full_name);
             personalization.addDynamicTemplateData("login_email", login_email);
             personalization.addDynamicTemplateData("login_passcode", login_passcode);
 
             personalization.addTo(new Email(to_email));
         } else if (type.equals("SRN")) {
-            mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
+            mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
             // send email to DA
 
             to_email = "jaewuchun@gmail.com"; // will be DA -- me for testing purposes
             mail.setFrom(new Email("it@cahsmun.org"));
 
             full_name = JsonPath.read(emailInfoJson, "$.full_name");
-            login_email = JsonPath.read(emailInfoJson, "$.login_email");
-            login_passcode = JsonPath.read(emailInfoJson, "$.login_passcode");
-
             school_name = JsonPath.read(emailInfoJson, "$.school_name");
 
             personalization.addDynamicTemplateData("full_name", full_name);
-            personalization.addDynamicTemplateData("login_email", login_email);
-            personalization.addDynamicTemplateData("login_passcode", login_passcode);
             personalization.addDynamicTemplateData("school_name", school_name);
+
+            mail.setSubject("[CRS] New School Registration: " + school_name);
 
             personalization.addTo(new Email(to_email));
         } else if (type.equals("TEST")) {
