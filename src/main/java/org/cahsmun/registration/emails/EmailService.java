@@ -1,12 +1,12 @@
 package org.cahsmun.registration.emails;
 
 import com.sendgrid.*;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@CrossOrigin()
+@RestController
 public class EmailService {
 
     private final String SENDGRID_API="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";
