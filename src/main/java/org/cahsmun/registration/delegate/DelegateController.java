@@ -1,5 +1,13 @@
 package org.cahsmun.registration.delegate;
 
+import com.jayway.jsonpath.JsonPath;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.authentication.UserExistException;
 import org.cahsmun.registration.user.UserRepository;
@@ -10,6 +18,7 @@ import org.cahsmun.registration.user.UserServiceImpl;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,6 +27,8 @@ import java.util.stream.StreamSupport;
 @RestController
 @Slf4j
 public class DelegateController {
+
+    private final String SENDGRID_API="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";
 
     @Resource
     DelegateRepository delegateRepository;
@@ -54,8 +65,38 @@ public class DelegateController {
 
 
     @PostMapping("/registration")
-    public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException {
+    public Delegate createDelegate(@Valid @RequestBody RegistrationInfo registrationInfo) throws UserExistException, IOException {
         User user = userService.save(new User(registrationInfo)); // returns User object that has just been made
+
+
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setTemplateId("d-66a3d695111747af80148e83bcf6c328");
+
+        personalization.addDynamicTemplateData("full_name", registrationInfo.getName());
+        personalization.addDynamicTemplateData("login_email", registrationInfo.getEmail());
+        personalization.addDynamicTemplateData("login_passcode", registrationInfo.getPassword());
+
+        personalization.addTo(new Email(registrationInfo.getEmail()));
+        mail.addPersonalization(personalization);
+
+        SendGrid sg = new SendGrid(SENDGRID_API);
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+
         if(user != null) {
             return delegateRepository.save(new Delegate(registrationInfo));
         } else throw new UserExistException("User is empty. Something went wrong.");

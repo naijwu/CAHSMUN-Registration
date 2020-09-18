@@ -1,5 +1,12 @@
 package org.cahsmun.registration.delegation;
 
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.authentication.UserExistException;
 import org.cahsmun.registration.delegate.Delegate;
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +35,8 @@ import java.util.stream.StreamSupport;
 @RestController
 @Slf4j
 public class DelegationController {
+
+    private final String SENDGRID_API="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";
 
     @Resource
     DelegationRepository delegationRepository;
@@ -87,7 +97,7 @@ public class DelegationController {
 
     // Registering AS SPONSOR
     @PostMapping("/delegations/sponsor/register")
-    public Delegation createDelegation(@Valid @RequestBody DelegationInfo delegationInfo) throws UserExistException {
+    public Delegation createDelegation(@Valid @RequestBody DelegationInfo delegationInfo) throws UserExistException, IOException {
         /*
             Three steps:
             1. Create user account (used for login)
@@ -127,6 +137,42 @@ public class DelegationController {
         sponsorRepository.save(createdSponsor);
         delegationRepository.save(createdDelegation);
 
+
+
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
+
+        personalization.addDynamicTemplateData("full_name", delegationInfo.getName());
+        personalization.addDynamicTemplateData("login_email", delegationInfo.getEmail());
+        personalization.addDynamicTemplateData("login_passcode", delegationInfo.getPassword());
+
+        personalization.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
+        personalization.addDynamicTemplateData("school_address", delegationInfo.getAddress_one());
+        personalization.addDynamicTemplateData("school_city", delegationInfo.getCity());
+        personalization.addDynamicTemplateData("school_province", delegationInfo.getProvince());
+        personalization.addDynamicTemplateData("school_postal", delegationInfo.getPostal_code());
+
+        personalization.addTo(new Email(delegationInfo.getEmail()));
+        mail.addPersonalization(personalization);
+
+        SendGrid sg = new SendGrid(SENDGRID_API);
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+
         if(user != null) {
             return createdDelegation;
         } else throw new UserExistException("User is empty. Something went wrong. Wouldn't like to be you... you know, needing to fix this issue and all...");
@@ -134,7 +180,7 @@ public class DelegationController {
 
     // Registering AS DELEGATE
     @PostMapping("/delegations/delegate/register")
-    public Delegation createDelegationAsDelegate(@Valid @RequestBody DelegationInfo delegationInfo) throws UserExistException {
+    public Delegation createDelegationAsDelegate(@Valid @RequestBody DelegationInfo delegationInfo) throws UserExistException, IOException {
         /*
             Three steps:
             1. Create user account (used for login)
@@ -173,6 +219,42 @@ public class DelegationController {
 
         delegateRepository.save(createdDelegate);
         delegationRepository.save(createdDelegation);
+
+
+
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
+
+        personalization.addDynamicTemplateData("full_name", delegationInfo.getName());
+        personalization.addDynamicTemplateData("login_email", delegationInfo.getEmail());
+        personalization.addDynamicTemplateData("login_passcode", delegationInfo.getPassword());
+
+        personalization.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
+        personalization.addDynamicTemplateData("school_address", delegationInfo.getAddress_one());
+        personalization.addDynamicTemplateData("school_city", delegationInfo.getCity());
+        personalization.addDynamicTemplateData("school_province", delegationInfo.getProvince());
+        personalization.addDynamicTemplateData("school_postal", delegationInfo.getPostal_code());
+
+        personalization.addTo(new Email(delegationInfo.getEmail()));
+        mail.addPersonalization(personalization);
+
+        SendGrid sg = new SendGrid(SENDGRID_API);
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
 
         if(user != null) {
             return createdDelegation;

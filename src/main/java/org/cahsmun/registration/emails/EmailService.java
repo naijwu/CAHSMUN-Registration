@@ -43,7 +43,7 @@ public class EmailService {
             value = "/sendmail",
             method = RequestMethod.POST,
             consumes = "application/json")
-    public String sendEmail(@RequestBody String emailInfoJson) throws IOException {
+    public void sendEmail(@RequestBody String emailInfoJson) throws IOException {
 
         Mail mail = new Mail();
         Personalization personalization = new Personalization();
@@ -172,6 +172,6 @@ public class EmailService {
         } catch (IOException ex) {
             throw ex;
         }
-        return emailInfoJson;
+
     }
 }
