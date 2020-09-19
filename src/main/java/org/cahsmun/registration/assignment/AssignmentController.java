@@ -87,6 +87,7 @@ public class AssignmentController {
         mail2.setFrom(new Email("delegates@cahsmun.org"));
         mail2.setTemplateId("d-0c25c8e32bfd4a96b339018a46a7230f");
 
+        personalization2.addDynamicTemplateData("full_name", delegate.getName());
         personalization2.addDynamicTemplateData("committee", assignment.getCommittee());
         personalization2.addDynamicTemplateData("country", assignment.getCountry());
 
