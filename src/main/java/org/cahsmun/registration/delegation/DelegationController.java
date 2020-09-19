@@ -190,7 +190,7 @@ public class DelegationController {
             request2.setMethod(Method.POST);
             request2.setEndpoint("mail/send");
             request2.setBody(mail2.build());
-            Response response = sg2.api(request);
+            Response response = sg2.api(request2);
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
@@ -300,7 +300,7 @@ public class DelegationController {
             request2.setMethod(Method.POST);
             request2.setEndpoint("mail/send");
             request2.setBody(mail2.build());
-            Response response = sg2.api(request);
+            Response response = sg2.api(request2);
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
