@@ -1,5 +1,12 @@
 package org.cahsmun.registration.assignment;
 
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
 import lombok.extern.slf4j.Slf4j;
 import org.cahsmun.registration.delegate.Delegate;
 import org.cahsmun.registration.delegate.DelegateRepository;
@@ -9,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +26,8 @@ import java.util.stream.StreamSupport;
 @RestController
 @Slf4j
 public class AssignmentController {
+
+    private final String SENDGRID_API="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";
 
     @Resource
     AssignmentRepository assignmentRepository;
@@ -63,12 +73,41 @@ public class AssignmentController {
     }
 
     @PutMapping("/assign/{assignment_id}/{delegate_id}")
-    public Assignment assignDelegate(@PathVariable long assignment_id, @PathVariable long delegate_id) {
+    public Assignment assignDelegate(@PathVariable long assignment_id, @PathVariable long delegate_id) throws IOException {
         Assignment assignment = assignmentRepository.findById(assignment_id).orElseThrow(() -> new ResourceNotFoundException("Assignment not found with ID: " + assignment_id));
         Delegate delegate = delegateRepository.findById(delegate_id).orElseThrow(() -> new ResourceNotFoundException("Delegate not found with ID: " + delegate_id));
 
         assignment.setDelegate_id(delegate.getDelegate_id());
         delegate.setAssignment_id(assignment.getAssignment_id());
+
+
+
+        Mail mail2 = new Mail();
+        Personalization personalization2 = new Personalization();
+        mail2.setFrom(new Email("delegates@cahsmun.org"));
+        mail2.setTemplateId("d-0c25c8e32bfd4a96b339018a46a7230f");
+
+        personalization2.addDynamicTemplateData("committee", assignment.getCommittee());
+        personalization2.addDynamicTemplateData("country", assignment.getCountry());
+
+        personalization2.addTo(new Email(delegate.getEmail())); // TODO: For production, replace with delegates@cahsmun.org
+        mail2.addPersonalization(personalization2);
+
+        SendGrid sg2 = new SendGrid(SENDGRID_API);
+        Request request2 = new Request();
+        try {
+            request2.setMethod(Method.POST);
+            request2.setEndpoint("mail/send");
+            request2.setBody(mail2.build());
+            Response response = sg2.api(request2);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
 
         delegateRepository.save(delegate);
 
