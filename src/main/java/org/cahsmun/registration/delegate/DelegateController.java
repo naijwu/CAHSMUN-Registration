@@ -71,7 +71,7 @@ public class DelegateController {
 
         Mail mail = new Mail();
         Personalization personalization = new Personalization();
-        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setFrom(new Email("delegates@cahsmun.org"));
         mail.setTemplateId("d-66a3d695111747af80148e83bcf6c328");
 
         personalization.addDynamicTemplateData("full_name", registrationInfo.getName());
@@ -138,7 +138,7 @@ public class DelegateController {
     }
 
     @PutMapping("/registration/head") // updates
-    public Delegate registerHeadDelegate(@Valid @RequestBody Delegate delegate) {
+    public Delegate registerHeadDelegate(@Valid @RequestBody Delegate delegate) throws UserExistException, IOException {
 
         Delegate delegateFromDB = delegateRepository.findByEmail(delegate.getEmail());
 
@@ -169,6 +169,35 @@ public class DelegateController {
         delegateFromDB.setWaiver_link(delegate.getWaiver_link());
         delegateFromDB.setWaiver(delegate.getWaiver());
         delegateFromDB.setDelegationId(delegate.getDelegationId());
+
+
+
+
+        Mail mail = new Mail();
+        Personalization personalization = new Personalization();
+        mail.setFrom(new Email("delegates@cahsmun.org"));
+        mail.setTemplateId("d-66a3d695111747af80148e83bcf6c328");
+
+        personalization.addDynamicTemplateData("full_name", delegate.getName());
+        personalization.addDynamicTemplateData("login_email", delegateFromDB.getEmail());
+        personalization.addDynamicTemplateData("login_passcode", delegateFromDB.getPassword());
+
+        personalization.addTo(new Email(delegateFromDB.getEmail()));
+        mail.addPersonalization(personalization);
+
+        SendGrid sg = new SendGrid(SENDGRID_API);
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
 
         return delegateRepository.save(delegateFromDB);
     }

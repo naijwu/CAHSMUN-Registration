@@ -141,7 +141,7 @@ public class DelegationController {
 
         Mail mail = new Mail();
         Personalization personalization = new Personalization();
-        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setFrom(new Email("delegates@cahsmun.org"));
         mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
 
         personalization.addDynamicTemplateData("full_name", delegationInfo.getName());
@@ -164,6 +164,33 @@ public class DelegationController {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+
+        Mail mail2 = new Mail();
+        Personalization personalization2 = new Personalization();
+        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
+
+        personalization2.addDynamicTemplateData("full_name", delegationInfo.getName());
+        personalization2.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
+
+        personalization2.addTo(new Email("it@cahsmun.org")); // TODO: For production, replace with delegates@cahsmun.org
+        mail.addPersonalization(personalization);
+
+        SendGrid sg2 = new SendGrid(SENDGRID_API);
+        Request request2 = new Request();
+        try {
+            request2.setMethod(Method.POST);
+            request2.setEndpoint("mail/send");
+            request2.setBody(mail2.build());
+            Response response = sg2.api(request);
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
@@ -224,7 +251,7 @@ public class DelegationController {
 
         Mail mail = new Mail();
         Personalization personalization = new Personalization();
-        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setFrom(new Email("delegates@cahsmun.org"));
         mail.setTemplateId("d-b877b83734b24152b02ae61e6b8b64fa");
 
         personalization.addDynamicTemplateData("full_name", delegationInfo.getName());
@@ -247,6 +274,33 @@ public class DelegationController {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+
+        Mail mail2 = new Mail();
+        Personalization personalization2 = new Personalization();
+        mail.setFrom(new Email("it@cahsmun.org"));
+        mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
+
+        personalization2.addDynamicTemplateData("full_name", delegationInfo.getName());
+        personalization2.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
+
+        personalization2.addTo(new Email("it@cahsmun.org")); // TODO: For production, replace with delegates@cahsmun.org
+        mail.addPersonalization(personalization);
+
+        SendGrid sg2 = new SendGrid(SENDGRID_API);
+        Request request2 = new Request();
+        try {
+            request2.setMethod(Method.POST);
+            request2.setEndpoint("mail/send");
+            request2.setBody(mail2.build());
+            Response response = sg2.api(request);
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
