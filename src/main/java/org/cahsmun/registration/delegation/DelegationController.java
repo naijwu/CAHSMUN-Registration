@@ -175,14 +175,14 @@ public class DelegationController {
 
         Mail mail2 = new Mail();
         Personalization personalization2 = new Personalization();
-        mail.setFrom(new Email("it@cahsmun.org"));
-        mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
+        mail2.setFrom(new Email("it@cahsmun.org"));
+        mail2.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
 
         personalization2.addDynamicTemplateData("full_name", delegationInfo.getName());
         personalization2.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
 
         personalization2.addTo(new Email("it@cahsmun.org")); // TODO: For production, replace with delegates@cahsmun.org
-        mail.addPersonalization(personalization);
+        mail2.addPersonalization(personalization2);
 
         SendGrid sg2 = new SendGrid(SENDGRID_API);
         Request request2 = new Request();
@@ -285,14 +285,14 @@ public class DelegationController {
 
         Mail mail2 = new Mail();
         Personalization personalization2 = new Personalization();
-        mail.setFrom(new Email("it@cahsmun.org"));
-        mail.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
+        mail2.setFrom(new Email("it@cahsmun.org"));
+        mail2.setTemplateId("d-a7dfc49a044f483eaa2014fec09fc275");
 
         personalization2.addDynamicTemplateData("full_name", delegationInfo.getName());
         personalization2.addDynamicTemplateData("school_name", delegationInfo.getSchool_name());
 
         personalization2.addTo(new Email("it@cahsmun.org")); // TODO: For production, replace with delegates@cahsmun.org
-        mail.addPersonalization(personalization);
+        mail2.addPersonalization(personalization2);
 
         SendGrid sg2 = new SendGrid(SENDGRID_API);
         Request request2 = new Request();

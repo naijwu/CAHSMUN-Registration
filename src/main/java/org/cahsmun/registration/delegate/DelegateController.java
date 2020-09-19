@@ -182,7 +182,7 @@ public class DelegateController {
         personalization.addDynamicTemplateData("login_email", delegateFromDB.getEmail());
         personalization.addDynamicTemplateData("login_passcode", delegateFromDB.getPassword());
 
-        personalization.addTo(new Email(delegateFromDB.getEmail()));
+        personalization.addTo(new Email(delegate.getEmail()));
         mail.addPersonalization(personalization);
 
         SendGrid sg = new SendGrid(SENDGRID_API);
@@ -198,6 +198,8 @@ public class DelegateController {
         } catch (IOException ex) {
             throw ex;
         }
+
+
 
         return delegateRepository.save(delegateFromDB);
     }
