@@ -28,7 +28,6 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class DelegateController {
 
-    private final String SENDGRID_API="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";
 
     @Resource
     DelegateRepository delegateRepository;
