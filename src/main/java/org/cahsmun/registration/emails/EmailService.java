@@ -17,7 +17,6 @@ import java.io.IOException;
 @RestController
 public class EmailService {
 
-    private final String SENDGRID_API="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";
 
     private String type; // DRC: Del Reg Confirm (To Registrant), SRC: School Reg Confirm (To Registrant), SRN: School Reg Notification (To DA)
     private String to_email; // To the one that just created the account/to DA
